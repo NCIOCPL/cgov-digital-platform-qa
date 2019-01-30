@@ -1,0 +1,12 @@
+
+/.settings
+/target
+/test-output
+/.vscode
+/test-data/~$*.xlsx
+/debug.log
+
+.DS_Store
+
+# Override of configuration file
+configuration/config.override.properties
