@@ -80,7 +80,8 @@ public abstract class PageObjectBase {
       }
 
       // Close the browser window.
-      browser.close();
+     browser.close();
+      browser.quit();///adding this doensot leave chromedriver open in activity monitor
 
       this.closed = true;
     }
