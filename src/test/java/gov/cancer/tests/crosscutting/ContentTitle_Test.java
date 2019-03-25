@@ -23,16 +23,13 @@ public class ContentTitle_Test extends TestObjectBase {
    * @param expectedTitle Expected content title.
    */
   @Test(dataProvider = "getContentTitles")
-  public void contentTitles(String path, String expectedTitle){
+  public void contentTitles(String path, String expectedTitle) {
 
-    TestRunner.run(ContentTitlePage.class, path, (ContentTitlePage page)->{
+    TestRunner.run(ContentTitlePage.class, path, (ContentTitlePage page) -> {
 
-      Assert.assertTrue(page.iscontentTitleVisible());	
-    	
-      Assert.assertEquals(page.getcontentTitleText(), expectedTitle, "Content title matches.");
-      
-      
-   
+      Assert.assertTrue(page.isContentTitleVisible());
+
+      Assert.assertEquals(page.getContentTitleText(), expectedTitle, "Content title matches.");
 
     });
   }
@@ -44,8 +41,8 @@ public class ContentTitle_Test extends TestObjectBase {
    *         requested data.
    */
   @DataProvider(name = "getContentTitles")
-  public Iterator<Object[]> getcontentTitles(){
-    String[] columns = {"path", "content_title"};
+  public Iterator<Object[]> getcontentTitles() {
+    String[] columns = { "path", "content_title" };
     return new ExcelDataReader(getDataFilePath("page-title-data.xlsx"), "browser_and_page_titles", columns);
   }
 }

@@ -12,10 +12,9 @@ import gov.cancer.pageobject.PageObjectBase;
  */
 public class ContentTitlePage extends PageObjectBase {
 
-
   @FindBy(how = How.CSS, using = "#main h1")
   WebElement contentTitle;
-  
+
   /**
    * Constructor
    *
@@ -30,19 +29,18 @@ public class ContentTitlePage extends PageObjectBase {
    *
    * @return True if the content is visible.
    */
-  public boolean iscontentTitleVisible() {
-	    return contentTitle.isDisplayed();
-	  }
+  public boolean isContentTitleVisible() {
+    return contentTitle.isDisplayed();
+  }
 
   /**
    * Retrieves the Text from all content title H1 elements, removing any
-   
+   * 
    */
-  public String getcontentTitleText() {
+  public String getContentTitleText() {
     String ContentTitle = contentTitle.getText();
-    //System.out.print("Title is: "+ contentTitle.getText());
     return ContentTitle;
-    
+
   }
 
 }
