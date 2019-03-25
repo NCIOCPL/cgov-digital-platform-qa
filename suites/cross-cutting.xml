@@ -3,9 +3,9 @@
 <suite name="Tests for cross-cutting concerns" parallel="none">
 
 <test name="Breadcrumb tests" preserve-order="true">
-	<classes>
+<!-- 	<classes>
 	  <class name="gov.cancer.tests.crosscutting.BreadCrumb_Test" />
-	</classes> 
+	</classes>  -->
 </test>
 
  <test name="Page title tests." preserve-order="true">

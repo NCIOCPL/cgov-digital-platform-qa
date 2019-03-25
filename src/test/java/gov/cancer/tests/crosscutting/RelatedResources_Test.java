@@ -73,8 +73,11 @@ public class RelatedResources_Test extends TestObjectBase {
         // Does external links have exit disclaimer 
         Assert.assertTrue(item.isLinkExternal(), "External links have exit disclaimer.");
         
+        
+        
       }
-
+                       
+                               
     });
   }
   
