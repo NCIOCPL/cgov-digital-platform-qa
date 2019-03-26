@@ -26,6 +26,7 @@ public class ContentTitle_Test extends TestObjectBase {
   public void contentTitles(String path, String expectedTitle) {
 
     TestRunner.run(ContentTitlePage.class, path, (ContentTitlePage page) -> {
+      
 
       Assert.assertTrue(page.isContentTitleVisible());
 
