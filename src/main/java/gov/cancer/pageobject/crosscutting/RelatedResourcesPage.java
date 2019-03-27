@@ -39,8 +39,7 @@ public class RelatedResourcesPage extends PageObjectBase {
    */
   public boolean hasRelatedResources() {
 
-    return relatedResourcesSection != null &&
-            relatedResourcesSection.isDisplayed();
+    return relatedResourcesSection != null && relatedResourcesSection.isDisplayed();
   }
 
   /**
