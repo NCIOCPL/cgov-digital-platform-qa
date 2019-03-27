@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.Properties;
 
 import org.apache.commons.lang3.SystemUtils;
+import org.bouncycastle.jcajce.provider.asymmetric.dsa.DSASigner.noneDSA;
 
 
 /**
@@ -148,6 +149,26 @@ public class Configuration {
     int height = Integer.parseInt(properties.getProperty(sizeKey + ".height"));
 
     return new Breakpoint(width, height);
+  }
+
+  /**
+   * Retrieve the top-level domain which is considered to be "internal"
+   * for purposes government / non-government.
+   *
+   * @return
+   */
+  public String getInternalDomain() {
+    String domain = properties.getProperty("domain.internal");
+    if (domain == null) {
+      domain = "gov";
+    }
+
+    return domain.trim();
+  }
+
+  public static void main(String[] args) {
+    Configuration config = new Configuration();
+    String domain = config.getInternalDomain();
   }
 
   /**
