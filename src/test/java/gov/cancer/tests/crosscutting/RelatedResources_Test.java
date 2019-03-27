@@ -66,9 +66,6 @@ public class RelatedResources_Test extends TestObjectBase {
         // Does it have a non-empty href?
         Assert.assertTrue(item.isLinkHrefBlank(), "HREF Is not blank.");
 
-        // Does it have broken links?
-        Assert.assertFalse(item.isLinkBroken(), "Links not broken.");
-
       }
 
     });

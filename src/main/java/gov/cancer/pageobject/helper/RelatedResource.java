@@ -50,17 +50,6 @@ public class RelatedResource {
   }
 
   /*
-   * checks for empty space, tab, new line presence( example:
-   * "/about-cancer/     coping/feelings/relaxation"
-   */
-  public boolean isLinkBroken() {
-    if (element != null)
-      return !Pattern.matches("^\\S+", element.getAttribute("href"));
-    else
-      return false;
-  }
-
-  /*
    * Does external links have Exit disclaimer styling if URL ends with .gov
    */
   public boolean isExternal() {
