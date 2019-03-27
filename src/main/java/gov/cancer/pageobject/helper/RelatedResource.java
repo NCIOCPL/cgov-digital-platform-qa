@@ -9,73 +9,77 @@ import org.openqa.selenium.WebElement;
 
 public class RelatedResource {
 
-	WebElement element;
+  WebElement element;
 
-	public RelatedResource(WebElement element) {
-		this.element = element;
-	}
+  public RelatedResource(WebElement element) {
+    this.element = element;
+  }
 
-	/*
-	 * check if this element text has a tag 'a'
-	 */
-	public Boolean isLinkElement() {
-		if(element != null) {
-			return element.getTagName().equalsIgnoreCase("a");
-		}
-		else
-			return false;
-	}
+  /*
+   * check if this element text has a tag 'a'
+   */
+  public Boolean isLinkElement() {
+    if (element != null) {
+      return element.getTagName().equalsIgnoreCase("a");
+    } else
+      return false;
+  }
 
-	/*
-	 * if element is null return false;
-	 * else trim the element text and if its empty return false
-	 */
-	public boolean isLinkTextBlank() {		
-		if(element != null) 
-			return !element.getText().trim().isEmpty();	
-		return false;
-	}
+  /*
+   * if element is null return false; else trim the element text and if its empty
+   * return false (ex: string between a tag)
+   */
+  public boolean isLinkTextBlank() {
+    if (element != null)
+      return !element.getText().trim().isEmpty();
+    return false;
+  }
 
-	/*
-	 * Does it have a non-empty href?
-	 */
-	public boolean isLinkHrefBlank() {
-		if(element != null)
-			return !element.getAttribute("href").isEmpty(); 
-		else 
-			return false;
-	}
+  /*
+   * Does it have a non-empty href? (ex: " ")
+   */
+  public boolean isLinkHrefBlank() {
+    if (element != null)
+      return !element.getAttribute("href").trim().isEmpty();
+    else
+      return false;
+  }
 
-	/*
-	 * checks for empty space, tab, new line presence
-	 */
-	public boolean isLinkBroken() {
-		if(element != null)
-			return !Pattern.matches("\\s+", element.getAttribute("href"));
-		else
-			return false;
-	}
+  /*
+   * checks for empty space, tab, new line presence( example:
+   * "/about-cancer/     coping/feelings/relaxation"
+   */
+  public boolean isLinkBroken() {
+    if (element != null)
+      return !Pattern.matches("^\\S+", element.getAttribute("href"));
+    else
+      return false;
+  }
 
+  /*
+   * Does external links have Exit disclaimer styling
+   * if URL ends with .gov
+   */
+  public boolean isExternal() {
+    URL url = null;
+    try {
+      url = new URL(element.getAttribute("href"));
+    } catch (MalformedURLException e) {
+      throw new RuntimeException();
+    }
+    String hostName = url.getHost();
+    if (element != null && !hostName.endsWith(".gov")) {
 
-	/*
-	 * Does external links have Exit disclaimer styling
-	 */
-	public Boolean isLinkExternal(){
+      return true;
+    } else
+      return false;
+  } 
 
-		URL url=null;
-		try {
-			url = new URL(element.getAttribute("href"));
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		String hostName =url.getHost();
-		
-		// hostName can be dynamically referenced from the config file
-		if (element != null && !hostName.equalsIgnoreCase("www.devbox"))
-			return element.findElement(By.xpath("following-sibling::a")).getAttribute("title").equals("Exit Disclaimer");
-		else
-			return true;
+  /* 
+   * does exit disclaimer appears next to the title
+   */
+  public boolean hasExitDisclaimer() {
+    return element.findElement(By.xpath("following-sibling::a")).getAttribute("title").equals("Exit Disclaimer");
+  }
 
-	}
 }

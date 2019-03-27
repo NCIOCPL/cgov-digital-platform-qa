@@ -12,8 +12,8 @@ import gov.cancer.pageobject.helper.RelatedResource;
 public class RelatedResourcesPage extends PageObjectBase {
 
   /**
-   * The related resources section.  Set in the constructor.
-   * You *MUST* check whether it is null before using.
+   * The related resources section. Set in the constructor. You *MUST* check
+   * whether it is null before using.
    */
   WebElement relatedResourcesSection;
 
@@ -27,16 +27,15 @@ public class RelatedResourcesPage extends PageObjectBase {
 
     // Get the actual section, if it's present.
     List<WebElement> findList = getBrowser().findElements(By.cssSelector("#nvcgRelatedResourcesArea"));
-    if(findList.size() > 0)
+    if (findList.size() > 0)
       relatedResourcesSection = findList.get(0);
     else
       relatedResourcesSection = null;
 
-  }    
+  }
 
-  /**
-   * Returns true if the page has a related resources section,
-   * false otherwise.
+  /*
+   * Returns true if the page has a related resources section, false otherwise.
    */
   public boolean hasRelatedResources() {
 
@@ -51,12 +50,30 @@ public class RelatedResourcesPage extends PageObjectBase {
 
     List<RelatedResource> links = new ArrayList<RelatedResource>();
     // Get the list of links.
-    List<WebElement> rawLinks = getBrowser().findElements(By.cssSelector("#nvcgRelatedResourcesArea ul li a:nth-child(1)"));
+    List<WebElement> rawLinks = getBrowser()
+        .findElements(By.cssSelector("#nvcgRelatedResourcesArea ul li a:nth-child(1)"));
     for (WebElement link : rawLinks) {
       links.add(new RelatedResource(link));
     }
     return links;
   }
 
+  /**
+   * Finds non-.gov links and put it in the List.
+   *
+   * @return non-.gov link List
+   */
+  public List<RelatedResource> getExtrentalReferances() {
+
+    List<RelatedResource> externalReferences = new ArrayList<RelatedResource>();
+
+    List<RelatedResource> allReferences = getRelatedResources();
+
+    for (RelatedResource item : allReferences) {
+      if (item.isExternal())
+        externalReferences.add((item));
+    }
+    return externalReferences;
+  }
 
 }
