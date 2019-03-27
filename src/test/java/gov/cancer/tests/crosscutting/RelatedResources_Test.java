@@ -30,7 +30,7 @@ import gov.cancer.tests.TestRunner;
 
 public class RelatedResources_Test extends TestObjectBase {
 
-  @Test(dataProvider = "getPagesWithRelatedResources", enabled = false)
+  @Test(dataProvider = "getPagesWithRelatedResources")
   public void verifyRelatedResourcesSectionAppears(String path) {
 
     // Get the page.
@@ -74,7 +74,7 @@ public class RelatedResources_Test extends TestObjectBase {
     });
   }
 
-  @Test(dataProvider = "getPagesWithRelatedResources", priority = 3, enabled = false)
+  @Test(dataProvider = "getPagesWithRelatedResources", priority = 3)
   public void verifyExitDisclaimerVisible(String path) {
 
     // Get the page.
@@ -107,7 +107,7 @@ public class RelatedResources_Test extends TestObjectBase {
 
   // =======================Without Resources ==========
 
-  @Test(dataProvider = "getPagesWithoutRelatedResources", priority = 1, enabled = false)
+  @Test(dataProvider = "getPagesWithoutRelatedResources", priority = 1)
   public void verifyRelatedResourcesSectionDoesNotAppear(String path) {
 
     // Get the page.
