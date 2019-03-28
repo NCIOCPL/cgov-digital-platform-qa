@@ -62,10 +62,10 @@ public class RelatedResource {
     String hostName = url.getHost();
 
     if (element != null && !hostName.endsWith(config.getInternalDomain())) {
-
       return true;
-    } else
+    } else {
       return false;
+    }
   }
 
   /*

@@ -49,8 +49,7 @@ public class RelatedResourcesPage extends PageObjectBase {
 
     List<RelatedResource> links = new ArrayList<RelatedResource>();
     // Get the list of links.
-    List<WebElement> rawLinks = getBrowser()
-        .findElements(By.cssSelector("#nvcgRelatedResourcesArea ul li a:nth-child(1)"));
+    List<WebElement> rawLinks = relatedResourcesSection.findElements(By.cssSelector("ul li a:nth-child(1)"));
     for (WebElement link : rawLinks) {
       links.add(new RelatedResource(link));
     }
