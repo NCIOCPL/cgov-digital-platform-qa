@@ -40,6 +40,7 @@ public class RelatedResourcesPage extends PageObjectBase {
   public boolean hasRelatedResources() {
 
     return relatedResourcesSection != null && relatedResourcesSection.isDisplayed();
+
   }
 
   /**
@@ -49,8 +50,8 @@ public class RelatedResourcesPage extends PageObjectBase {
 
     List<RelatedResource> links = new ArrayList<RelatedResource>();
     // Get the list of links.
-    List<WebElement> rawLinks = getBrowser()
-        .findElements(By.cssSelector("#nvcgRelatedResourcesArea ul li a:nth-child(1)"));
+    List<WebElement> rawLinks = relatedResourcesSection.findElements(By.cssSelector("ul li"));
+
     for (WebElement link : rawLinks) {
       links.add(new RelatedResource(link));
     }
@@ -59,7 +60,7 @@ public class RelatedResourcesPage extends PageObjectBase {
 
   /**
    * Finds non-.gov links and put it in the List.
-   *
+   * 
    * @return non-.gov link List
    */
   public List<RelatedResource> getExtrentalReferances() {
@@ -69,6 +70,7 @@ public class RelatedResourcesPage extends PageObjectBase {
     List<RelatedResource> allReferences = getRelatedResources();
 
     for (RelatedResource item : allReferences) {
+
       if (item.isExternal())
         externalReferences.add((item));
     }

@@ -2,29 +2,44 @@ package gov.cancer.pageobject.helper;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.regex.Pattern;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
 import gov.cancer.framework.Configuration;
 
+/*
+ * represents a single entry in a list of related resources
+ */
 public class RelatedResource {
-
+  // this is the element representing the entire related resource.
+  // its is the li tag
   WebElement element;
+
+  // this is the anchor tag for related resource
+  WebElement resourceLink;
+
   Configuration config;
 
   public RelatedResource(WebElement element) {
     this.element = element;
+    resourceLink = element.findElement(By.cssSelector("a:nth-child(1)"));
     config = new Configuration();
+  }
+
+  /*
+   * does exit disclaimer appears next to the title
+   */
+  public boolean hasExitDisclaimer() {
+    // externalLink with icon-exit-notification
+    WebElement externalLink = element.findElement(By.cssSelector("a:nth-child(2)"));
+    return externalLink.isDisplayed() && externalLink.getAttribute("class").equals("icon-exit-notification");
   }
 
   /*
    * check if this element text has a tag 'a'
    */
   public Boolean isLinkElement() {
-    if (element != null) {
-      return element.getTagName().equalsIgnoreCase("a");
+    if (resourceLink != null) {
+      return resourceLink.getTagName().equalsIgnoreCase("a");
     } else
       return false;
   }
@@ -34,8 +49,8 @@ public class RelatedResource {
    * return false (ex: string between a tag)
    */
   public boolean isLinkTextBlank() {
-    if (element != null)
-      return !element.getText().trim().isEmpty();
+    if (resourceLink != null)
+      return !resourceLink.getText().trim().isEmpty();
     return false;
   }
 
@@ -43,8 +58,8 @@ public class RelatedResource {
    * Does it have a non-empty href? (ex: " ")
    */
   public boolean isLinkHrefBlank() {
-    if (element != null)
-      return !element.getAttribute("href").trim().isEmpty();
+    if (resourceLink != null)
+      return !resourceLink.getAttribute("href").trim().isEmpty();
     else
       return false;
   }
@@ -54,26 +69,19 @@ public class RelatedResource {
    */
   public boolean isExternal() {
     URL url = null;
+
     try {
-      url = new URL(element.getAttribute("href"));
+      url = new URL(resourceLink.getAttribute("href"));
     } catch (MalformedURLException e) {
       throw new RuntimeException("Error loading URL", e);
     }
-    String hostName = url.getHost();
 
-    if (element != null && !hostName.endsWith(config.getInternalDomain())) {
+    String hostName = url.getHost();
+    if (resourceLink != null && !hostName.endsWith(config.getInternalDomain())) {
 
       return true;
     } else
       return false;
-  }
-
-  /*
-   * does exit disclaimer appears next to the title
-   */
-  public boolean hasExitDisclaimer() {
-
-    return element.findElement(By.xpath("following-sibling::a")).getAttribute("title").equals("Exit Disclaimer");
   }
 
 }

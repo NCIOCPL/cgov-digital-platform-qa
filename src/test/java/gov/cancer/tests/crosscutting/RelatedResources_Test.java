@@ -1,5 +1,6 @@
 package gov.cancer.tests.crosscutting;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -30,7 +31,7 @@ import gov.cancer.tests.TestRunner;
 
 public class RelatedResources_Test extends TestObjectBase {
 
-  @Test(dataProvider = "getPagesWithRelatedResources", priority = 1)
+  @Test(dataProvider = "getPagesWithRelatedResources")
   public void verifyRelatedResourcesSectionAppears(String path) {
 
     // Get the page.
@@ -42,7 +43,7 @@ public class RelatedResources_Test extends TestObjectBase {
     });
   }
 
-  @Test(dataProvider = "getPagesWithRelatedResources", priority = 2)
+  @Test(dataProvider = "getPagesWithRelatedResources")
   public void verifyRelatedResourcesLinks(String path) {
 
     // Get the page.
@@ -71,25 +72,43 @@ public class RelatedResources_Test extends TestObjectBase {
     });
   }
 
-  @Test(dataProvider = "getPagesWithRelatedResources", priority = 3)
-  public void verifyExitDisclaimerVisible(String path) {
+  @Test(dataProvider = "getPagesPagesWithExternalResources")
+  public void verifyExitDisclaimerVisible(String path, int expectedExternalCount) {
 
     // Get the page.
     TestRunner.run(RelatedResourcesPage.class, path, (RelatedResourcesPage page) -> {
 
       List<RelatedResource> externalLinks = page.getExtrentalReferances();
 
-      if (externalLinks.size() > 0) {
+      Assert.assertEquals(externalLinks.size(), expectedExternalCount);
 
-        for (RelatedResource item : externalLinks) {
-          // does Exit disclaimer icon appears next to external link
-          Assert.assertTrue(item.hasExitDisclaimer(), "Exit Disclaimer.");
-
-        }
+      for (RelatedResource item : externalLinks) {
+        // does Exit disclaimer icon appears next to external link
+        Assert.assertTrue(item.hasExitDisclaimer(), "Exit Disclaimer.");
 
       }
 
     });
+  }
+
+  @DataProvider(name = "getPagesPagesWithExternalResources")
+  public Iterator<Object[]> verifyExternalResources() {
+    String[] columns = { "path", "expectedExternalCount" };
+
+    Iterator<Object[]> values = new ExcelDataReader(getDataFilePath("related-resources-data.xlsx"),
+        "pages_with_external_resources", columns);
+    List<Object[]> converted = new ArrayList<Object[]>();
+    // 
+    while (values.hasNext()) {
+      Object[] item = values.next();
+      String raw = (String) item[1];
+
+      int expected = Integer.parseInt(raw);
+
+      converted.add(new Object[] { item[0], expected });
+    }
+
+    return converted.iterator();
   }
 
   /**
@@ -104,7 +123,7 @@ public class RelatedResources_Test extends TestObjectBase {
 
   // =======================Without Resources ==========
 
-  @Test(dataProvider = "getPagesWithoutRelatedResources", priority = 4)
+  @Test(dataProvider = "getPagesWithoutRelatedResources")
   public void verifyRelatedResourcesSectionDoesNotAppear(String path) {
 
     // Get the page.
