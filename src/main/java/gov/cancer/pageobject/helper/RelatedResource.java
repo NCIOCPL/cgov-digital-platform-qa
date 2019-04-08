@@ -65,7 +65,7 @@ public class RelatedResource {
   }
 
   /*
-   * Does external links have Exit disclaimer styling if URL ends with .gov
+   * Verifying Exit Disclaimer styling for Related Resource link that doesn't end with .gov,
    */
   public boolean isExternal() {
     URL url = null;

@@ -72,7 +72,7 @@ public class RelatedResources_Test extends TestObjectBase {
     });
   }
 
-  @Test(dataProvider = "getPagesPagesWithExternalResources")
+  @Test(dataProvider = "getPagesWithExternalResources")
   public void verifyExitDisclaimerVisible(String path, int expectedExternalCount) {
 
     // Get the page.
@@ -91,8 +91,8 @@ public class RelatedResources_Test extends TestObjectBase {
     });
   }
 
-  @DataProvider(name = "getPagesPagesWithExternalResources")
-  public Iterator<Object[]> verifyExternalResources() {
+  @DataProvider(name = "getPagesWithExternalResources")
+  public Iterator<Object[]> getPagesWithExternalResources() {
     String[] columns = { "path", "expectedExternalCount" };
 
     Iterator<Object[]> values = new ExcelDataReader(getDataFilePath("related-resources-data.xlsx"),
@@ -123,7 +123,7 @@ public class RelatedResources_Test extends TestObjectBase {
 
   // =======================Without Resources ==========
 
-  @Test(dataProvider = "getPagesWithoutRelatedResources")
+  //@Test(dataProvider = "getPagesWithoutRelatedResources")
   public void verifyRelatedResourcesSectionDoesNotAppear(String path) {
 
     // Get the page.
@@ -145,5 +145,9 @@ public class RelatedResources_Test extends TestObjectBase {
     return new ExcelDataReader(getDataFilePath("related-resources-data.xlsx"), "pages_without_related_resources",
         columns);
   }
+  
+  
+  
+
 
 }
