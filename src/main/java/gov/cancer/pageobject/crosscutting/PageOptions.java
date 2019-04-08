@@ -9,11 +9,15 @@ import gov.cancer.pageobject.PageObjectBase;
 
 public class PageOptions extends PageObjectBase {
 
-  // public PageOptions() {
-  //   super("");
-  //   // pageOptionsControl = null;
-  //   PageFactory.initElements(this.getBrowser(), this);
-  // }
+  /**
+   * Constructor
+   *
+   * @param path
+   *          server-relative path of the page to load.
+   */
+  public PageOptions(String path) {
+    super(path);
+  }
 
   /*
    * Testing if the PageOptionsControl exists on page and is visible
