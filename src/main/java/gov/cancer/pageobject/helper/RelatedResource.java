@@ -5,6 +5,7 @@ import java.net.URL;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import gov.cancer.framework.Configuration;
+import gov.cancer.framework.LinkHelper;
 
 /*
  * represents a single entry in a list of related resources
@@ -72,16 +73,18 @@ public class RelatedResource {
 
     try {
       url = new URL(resourceLink.getAttribute("href"));
+      
     } catch (MalformedURLException e) {
       throw new RuntimeException("Error loading URL", e);
     }
-
-    String hostName = url.getHost();
-    if (resourceLink != null && !hostName.endsWith(config.getInternalDomain())) {
-
-      return true;
-    } else
-      return false;
+    
+    if (LinkHelper.isGovermentUrl(url)) {
+ 
+    return true;
+  } else
+    return false;
+    
+    
   }
 
 }
