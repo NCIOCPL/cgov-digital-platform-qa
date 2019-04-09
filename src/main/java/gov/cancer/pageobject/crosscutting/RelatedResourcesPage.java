@@ -34,7 +34,7 @@ public class RelatedResourcesPage extends PageObjectBase {
 
   }
 
-  /*
+  /**
    * Returns true if the page has a related resources section, false otherwise.
    */
   public boolean hasRelatedResources() {
@@ -43,13 +43,17 @@ public class RelatedResourcesPage extends PageObjectBase {
 
   }
 
+  public boolean iuiuriui() {
+    return relatedResourcesSection.isDisplayed();
+  }
+
   /**
    * Find all of the related resource objects on the page.
    */
   public List<RelatedResource> getRelatedResources() {
 
     List<RelatedResource> links = new ArrayList<RelatedResource>();
-    // Get the list of links.
+
     List<WebElement> rawLinks = relatedResourcesSection.findElements(By.cssSelector("ul li"));
 
     for (WebElement link : rawLinks) {
@@ -63,18 +67,18 @@ public class RelatedResourcesPage extends PageObjectBase {
    * 
    * @return non-.gov link List
    */
-  public List<RelatedResource> getExtrentalReferances() {
+  public List<RelatedResource> getExternalResources() {
 
-    List<RelatedResource> externalReferences = new ArrayList<RelatedResource>();
+    List<RelatedResource> externalResources = new ArrayList<RelatedResource>();
 
-    List<RelatedResource> allReferences = getRelatedResources();
+    List<RelatedResource> allResources = getRelatedResources();
 
-    for (RelatedResource item : allReferences) {
+    for (RelatedResource item : allResources) {
 
       if (item.isExternal())
-        externalReferences.add((item));
+        externalResources.add((item));
     }
-    return externalReferences;
+    return externalResources;
   }
 
 }

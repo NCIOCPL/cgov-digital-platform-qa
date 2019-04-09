@@ -31,10 +31,16 @@ import gov.cancer.tests.TestRunner;
 
 public class RelatedResources_Test extends TestObjectBase {
 
-  @Test(dataProvider = "getPagesWithRelatedResources", priority = 1)
+  /**
+   * 
+   * This method is checking if Related Resources section is visible on the page
+   *
+   * @param path Path of the page to check.
+   *
+   */
+  @Test(dataProvider = "getPagesWithRelatedResources")
   public void verifyRelatedResourcesSectionAppears(String path) {
 
-    // Get the page.
     TestRunner.run(RelatedResourcesPage.class, path, (RelatedResourcesPage page) -> {
 
       // Assert the related resources section is visible.
@@ -43,10 +49,17 @@ public class RelatedResources_Test extends TestObjectBase {
     });
   }
 
-  @Test(dataProvider = "getPagesWithRelatedResources", priority = 2)
+  /**
+   * 
+   * This method is checking all of the related resource objects on the page and
+   * verifying link Text/HREF is not blank
+   *
+   * @param path Path of the page to check.
+   *
+   */
+  @Test(dataProvider = "getPagesWithRelatedResources")
   public void verifyRelatedResourcesLinks(String path) {
 
-    // Get the page.
     TestRunner.run(RelatedResourcesPage.class, path, (RelatedResourcesPage page) -> {
 
       List<RelatedResource> resources = page.getRelatedResources();
@@ -72,13 +85,22 @@ public class RelatedResources_Test extends TestObjectBase {
     });
   }
 
-  @Test(dataProvider = "getPagesWithExternalResources", priority = 3)
+  /**
+   * 
+   * This method is to check each Related Resource link which does not end with
+   * .gov is treated as external link. Test will assert exit disclaimer icon
+   * displays for each External link
+   *
+   * @param path                  Path of the page to check.
+   * @param expectedExternalCount Expected External Count
+   */
+  @Test(dataProvider = "getPagesWithExternalResources")
   public void verifyExitDisclaimerVisible(String path, int expectedExternalCount) {
 
     // Get the page.
     TestRunner.run(RelatedResourcesPage.class, path, (RelatedResourcesPage page) -> {
 
-      List<RelatedResource> externalLinks = page.getExtrentalReferances();
+      List<RelatedResource> externalLinks = page.getExternalResources();
 
       Assert.assertEquals(externalLinks.size(), expectedExternalCount);
 
@@ -91,6 +113,36 @@ public class RelatedResources_Test extends TestObjectBase {
     });
   }
 
+  /**
+   * 
+   * This method is checking all pages that does not display related resources
+   * section
+   *
+   * @param path Path of the page to check.
+   * 
+   */
+  @Test(dataProvider = "getPagesWithoutRelatedResources")
+  public void verifyRelatedResourcesSectionDoesNotAppear(String path) {
+
+    // Get the page.
+    TestRunner.run(RelatedResourcesPage.class, path, (RelatedResourcesPage page) -> {
+
+      // Assert the related resources section is NOT visible.
+      Assert.assertFalse(page.hasRelatedResources(), "Page has no Related Resources section.");
+
+    });
+  }
+
+  /**
+   * 
+   * This method is to check each Related Resource link which does not end with
+   * .gov is treated as external link. Test will assert exit disclaimer icon
+   * displays for each External link
+   *
+   * @return path Returns a list of paths for pages which are expected to display
+   *         a related resources section.
+   * @return expectedExternalCount Expected External Count
+   */
   @DataProvider(name = "getPagesWithExternalResources")
   public Iterator<Object[]> getPagesWithExternalResources() {
     String[] columns = { "path", "expectedExternalCount" };
@@ -98,7 +150,7 @@ public class RelatedResources_Test extends TestObjectBase {
     Iterator<Object[]> values = new ExcelDataReader(getDataFilePath("related-resources-data.xlsx"),
         "pages_with_external_resources", columns);
     List<Object[]> converted = new ArrayList<Object[]>();
-    // 
+    //
     while (values.hasNext()) {
       Object[] item = values.next();
       String raw = (String) item[1];
@@ -112,8 +164,9 @@ public class RelatedResources_Test extends TestObjectBase {
   }
 
   /**
-   * Returns a list of paths for pages which are expected to display a related
-   * resources section.
+   * 
+   * @return path Returns a list of paths for pages which are expected to display
+   *         a related resources section and/or links.
    */
   @DataProvider(name = "getPagesWithRelatedResources")
   public Iterator<Object[]> getPagesWithRelatedResources() {
@@ -121,23 +174,10 @@ public class RelatedResources_Test extends TestObjectBase {
     return new ExcelDataReader(getDataFilePath("related-resources-data.xlsx"), "pages_with_related_resources", columns);
   }
 
-  // =======================Without Resources ==========
-
-  @Test(dataProvider = "getPagesWithoutRelatedResources", priority = 4)
-  public void verifyRelatedResourcesSectionDoesNotAppear(String path) {
-
-    // Get the page.
-    TestRunner.run(RelatedResourcesPage.class, path, (RelatedResourcesPage page) -> {
-
-      // Assert the related resources section is NOT visible.
-      Assert.assertFalse(page.hasRelatedResources(), "Page has no Related Resources section.");
-
-    });
-  }
-
   /**
-   * Returns a list of paths for pages which are NOT expected to display a related
-   * resources section.
+   * 
+   * @return path Returns a list of paths for pages which Does Not expected to
+   *         display a related resources links.
    */
   @DataProvider(name = "getPagesWithoutRelatedResources")
   public Iterator<Object[]> getPagesWithoutRelatedResources() {
@@ -145,9 +185,5 @@ public class RelatedResources_Test extends TestObjectBase {
     return new ExcelDataReader(getDataFilePath("related-resources-data.xlsx"), "pages_without_related_resources",
         columns);
   }
-  
-  
-  
-
 
 }

@@ -18,8 +18,10 @@ public class RelatedResource {
   // this is the anchor tag for related resource
   WebElement resourceLink;
 
+  // Getting configuration file to access domain values
   Configuration config;
 
+  // Related Resources links
   public RelatedResource(WebElement element) {
     this.element = element;
     resourceLink = element.findElement(By.cssSelector("a:nth-child(1)"));
@@ -38,7 +40,7 @@ public class RelatedResource {
   /*
    * check if this element text has a tag 'a'
    */
-  public Boolean isLinkElement() {
+  public boolean isLinkElement() {
     if (resourceLink != null) {
       return resourceLink.getTagName().equalsIgnoreCase("a");
     } else
@@ -66,25 +68,25 @@ public class RelatedResource {
   }
 
   /*
-   * Verifying Exit Disclaimer styling for Related Resource link that doesn't end with .gov,
+   * Verifying Exit Disclaimer styling for Related Resource link that doesn't end
+   * with .gov,
    */
   public boolean isExternal() {
     URL url = null;
 
     try {
       url = new URL(resourceLink.getAttribute("href"));
-      
+
     } catch (MalformedURLException e) {
       throw new RuntimeException("Error loading URL", e);
     }
-    
+
     if (LinkHelper.isGovermentUrl(url)) {
- 
-    return true;
-  } else
-    return false;
-    
-    
+
+      return true;
+    } else
+      return false;
+
   }
 
 }
