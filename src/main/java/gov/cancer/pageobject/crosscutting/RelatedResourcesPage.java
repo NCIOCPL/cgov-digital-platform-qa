@@ -43,10 +43,6 @@ public class RelatedResourcesPage extends PageObjectBase {
 
   }
 
-  public boolean iuiuriui() {
-    return relatedResourcesSection.isDisplayed();
-  }
-
   /**
    * Find all of the related resource objects on the page.
    */
