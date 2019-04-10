@@ -34,21 +34,6 @@
           <suiteXmlFiles>
             <suiteXmlFile>${suiteFile}</suiteXmlFile>
           </suiteXmlFiles>
-          <systemPropertyVariables>
-            <!-- To use a different browser, on the maven command line, specify `-Dbrowser=<browser_name>`
-
-                Valid values are:
-                  Chrome
-                  ChromeHeadless
-                  Firefox
-                  GeckoHeadless
-                  iPhone6
-                  iPad
-            -->
-            <!-- <browser>ChromeHeadless</browser> -->
-            <browser>Chrome</browser>
-            <debug>false</debug>
-          </systemPropertyVariables>
         </configuration>
 
       </plugin>

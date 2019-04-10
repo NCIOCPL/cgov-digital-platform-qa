@@ -6,7 +6,7 @@
       <class name="gov.cancer.tests.crosscutting.BreadCrumb_Test" />
     </classes>
   </test>
-  <test name="Page title tests.">
+  <test name="Page Title tests." preserve-order="true">
     <classes>
       <class name="gov.cancer.tests.crosscutting.PageTitle_Test" />
     </classes>
@@ -16,5 +16,13 @@
       <class name="gov.cancer.tests.crosscutting.Footer_Test" />
     </classes>
   </test>
+
+  <test name="Related Resources tests." preserve-order="true">
+    <classes>
+      <class
+        name="gov.cancer.tests.crosscutting.RelatedResources_Test" />
+    </classes>
+  </test>
+
 
 </suite>
