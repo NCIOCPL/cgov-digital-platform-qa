@@ -8,9 +8,13 @@ import gov.cancer.pageobject.PageObjectBase;
  * solely for verifying attributes of a page's Dates Display Text
  */
 public class DatesPage extends PageObjectBase {
-  
-  // Datetime container
-  final public String dateTimeDisplay = "[datetime]";
+
+  // Date Display container
+  final public String dateDisplay = "div.document-dates";
+  // Date Text, date Label and date stamp selectors
+  final public String dateText = "[datetime]";
+  final public String dateLabel = "div.document-dates li strong";
+  final public String dateStamp = "div.document-dates li time";
 
   /**
    * Constructor
@@ -25,16 +29,26 @@ public class DatesPage extends PageObjectBase {
   /*
    * Returns true if DateTime Field is displayed on the page, false otherwise
    */
-  public boolean isDateFieldVisible() {
-    if (ElementHelper.findElement(getBrowser(), dateTimeDisplay) != null)
-      return ElementHelper.findElement(getBrowser(), dateTimeDisplay).isDisplayed();
+  public boolean dateDisplayIsPresent() {
+    if (ElementHelper.findElement(getBrowser(), dateDisplay) != null)
+      return ElementHelper.findElement(getBrowser(), dateDisplay).isDisplayed();
     else
       return false;
   }
 
-  /* Returns Datetime as text sting */
-  public String getDateTimeTextString() {
-    return ElementHelper.findElement(getBrowser(), dateTimeDisplay).getText();
+  /* Returns Date Label as text sting */
+  public String getDateLabel() {
+    return ElementHelper.findElement(getBrowser(), dateLabel).getText();
+  }
+
+  /* Returns Date Text attribute as sting */
+  public String getDateText() {
+    return ElementHelper.findElement(getBrowser(), dateText).getAttribute("datetime");
+  }
+
+  /* Returns Date Stamp as text sting */
+  public String getDateStamp() {
+    return ElementHelper.findElement(getBrowser(), dateStamp).getText();
   }
 
 }
