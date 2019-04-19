@@ -23,9 +23,9 @@
         name="gov.cancer.tests.crosscutting.RelatedResources_Test" />
     </classes>
   </test>
-  <test name="Dates tests." preserve-order="true">
+  <test name="Simple Dates tests." preserve-order="true">
     <classes>
-      <class name="gov.cancer.tests.crosscutting.Dates_Test" />
+      <class name="gov.cancer.tests.crosscutting.SimpleDates_Test" />
     </classes>
   </test>
 
