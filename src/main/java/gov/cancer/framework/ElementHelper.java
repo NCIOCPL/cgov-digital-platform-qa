@@ -29,8 +29,9 @@ public class ElementHelper {
     } else if (findList.size() > 1) {
       throw new RuntimeException("There should be only one Element");
 
-    } else
+    } else {
       return null;
+    }
 
   }
 
@@ -48,9 +49,9 @@ public class ElementHelper {
     List<WebElement> findList = parent.findElements(By.cssSelector(selector));
     if (findList.size() > 0) {
       return findList;
-
-    } else
+    } else {
       return null;
+    }
   }
 
   /**
@@ -63,10 +64,34 @@ public class ElementHelper {
    */
   public static boolean isVisible(SearchContext parent, String selector) {
 
-    if (findElement(parent, selector) != null)
+    if (findElement(parent, selector) != null) {
       return findElement(parent, selector).isDisplayed();
-    else
+    }
+    else {
       return false;
+    }
+  }
+
+  /**
+   * Tests whether the text of the specified WebElement contains a specific
+   * substring. NOTE: This is a simple, case-sensitive search and does not account
+   * for markup contained in the target WebElement. E.g. A search for "the big
+   * cat" will fail if the WebElement contains the markup "the <b>big</b> cat."
+   *
+   * @param element    The WebElement containing the text to be searched.
+   * @param searchText The text to be searched for.
+   * @return True if element contains searchText, false otherwise.
+   *
+   *         NOTE: if element is null, it cannot contain text and the method will
+   *         return false.
+   */
+  public static boolean elementContainsText(WebElement element, String searchText) {
+    if (element != null) {
+      String text = element.getText();
+      return text.contains(searchText);
+    } else {
+      return false;
+    }
   }
 
 }
