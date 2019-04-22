@@ -5,6 +5,11 @@
 /.vscode
 /test-data/~$*.xlsx
 /debug.log
+/.classpath
+/.factorypath
+/bin
+/run.sh
+/run.bat
 
 .DS_Store
 
