@@ -1,9 +1,14 @@
 
+/.classpath
+/.factorypath
 /.settings
+/.vscode
+
+/bin
 /target
 /test-output
-/.vscode
 /test-data/~$*.xlsx
+
 /debug.log
 /.classpath
 /.factorypath
