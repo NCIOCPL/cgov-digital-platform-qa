@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import gov.cancer.framework.ParsedURL;
 import gov.cancer.framework.BrowserManager;
 import gov.cancer.framework.Configuration;
+import gov.cancer.framework.IResize;
 
 /**
  * This is the root base class for all page objects. If a page object class
@@ -104,6 +105,9 @@ public abstract class PageObjectBase {
     return this.browser;
   }
 
+  public void doResize(IResize resizer){
+    resizer.resize(getBrowser());
+  }
 
   /**
    * Gets a URL object representing the current page's URL.

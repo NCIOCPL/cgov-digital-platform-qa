@@ -7,54 +7,13 @@ import java.net.URL;
 import java.util.Properties;
 
 import org.apache.commons.lang3.SystemUtils;
-import org.bouncycastle.jcajce.provider.asymmetric.dsa.DSASigner.noneDSA;
-
 
 /**
- * Presents an interface for retieviving values stored in the config.properties file.
+ * Presents an interface for retieviving values stored in the config.properties
+ * file.
  */
 public class Configuration {
   Properties properties;
-
-
-  /**
-   * Contains the dimensions for a responsive layout breakpoint.
-   */
-  public class Breakpoint {
-    // Width in pixels.
-    private int width;
-    // Height in pixels.
-    private int height;
-
-    /**
-     * Creates an instance of Breakpoint
-     *
-     * @param width  screen width in pixels.
-     * @param height screen height in pixels.
-     */
-    public Breakpoint(int width, int height) {
-      this.width = width;
-      this.height = height;
-    }
-
-    /**
-     * GetWidth().
-     * @return the desired width of the browser window.
-     */
-    public int GetWidth() {
-      return this.width;
-    }
-
-    /**
-     * GetHeight().
-     *
-     * @return the desired height of the browser window.
-     */
-    public int GetHeight() {
-      return this.height;
-    }
-  }
-
 
   /**
    * Constructor.
@@ -68,7 +27,7 @@ public class Configuration {
       properties.load(fis);
 
       File overrides = new File("./configuration/config.override.properties");
-      if( overrides.exists()){
+      if (overrides.exists()) {
         FileInputStream ois = new FileInputStream(overrides);
         properties.load(ois);
       }
@@ -85,8 +44,8 @@ public class Configuration {
    * when retrieving pages for testing. The value returned is affected by
    *
    * environment.hostname.active from config.properties file.
-   * environment.hostname.active from config.override.properties file.
-   * Command line environment property definition.
+   * environment.hostname.active from config.override.properties file. Command
+   * line environment property definition.
    *
    * @return String containing the host name pages should be loaded from.
    */
@@ -95,7 +54,7 @@ public class Configuration {
     return properties.getProperty(key);
   }
 
-  public String getDataFileBasePath(){
+  public String getDataFileBasePath() {
     return properties.getProperty("filepath.testdatabase");
   }
 
@@ -104,7 +63,7 @@ public class Configuration {
    *
    * @return a String containing the name of the environment being tested.
    */
-  public String getEnvironmentName(){
+  public String getEnvironmentName() {
     return properties.getProperty("environment.active");
   }
 
@@ -113,8 +72,8 @@ public class Configuration {
    *
    * @return Breakpoint object containing the width and height.
    */
-  public Breakpoint getSmallBreakpoint() {
-    return getBreakpoint("layout.screensize.small");
+  public Breakpoint getMobileBreakpoint() {
+    return getBreakpoint("layout.screensize.mobile");
   }
 
   /**
@@ -122,8 +81,8 @@ public class Configuration {
    *
    * @return Breakpoint object containing the width and height.
    */
-  public Breakpoint getMediumBreakpoint() {
-    return getBreakpoint("layout.screensize.medium");
+  public Breakpoint getTabletBreakpoint() {
+    return getBreakpoint("layout.screensize.tablet");
   }
 
   /**
@@ -131,29 +90,20 @@ public class Configuration {
    *
    * @return Breakpoint object containing the width and height.
    */
-  public Breakpoint getLargeBreakpoint() {
-    return getBreakpoint("layout.screensize.large");
-  }
-
-  /**
-   * Retrieves the dimensions for the extra-large responsive layout.
-   *
-   * @return Breakpoint object containing the width and height.
-   */
-  public Breakpoint getXLargeBreakpoint() {
-    return getBreakpoint("layout.screensize.xlarge");
+  public Breakpoint getDesktopBreakpoint() {
+    return getBreakpoint("layout.screensize.desktop");
   }
 
   private Breakpoint getBreakpoint(String sizeKey) {
-    int width  = Integer.parseInt(properties.getProperty(sizeKey + ".width"));
+    int width = Integer.parseInt(properties.getProperty(sizeKey + ".width"));
     int height = Integer.parseInt(properties.getProperty(sizeKey + ".height"));
 
     return new Breakpoint(width, height);
   }
 
   /**
-   * Retrieve the top-level domain which is considered to be "internal"
-   * for purposes government / non-government.
+   * Retrieve the top-level domain which is considered to be "internal" for
+   * purposes government / non-government.
    *
    * @return
    */
@@ -178,7 +128,7 @@ public class Configuration {
    */
   public String getBrowser() {
     String browser = properties.getProperty("browser.active");
-    if(browser != null)
+    if (browser != null)
       browser = browser.trim().toLowerCase();
 
     return browser;
@@ -188,7 +138,8 @@ public class Configuration {
    * Retrieves the identified URL from the configuration file and returns a
    * version modified to reflect the current environment.
    *
-   * @param pageURL Identifier for a specific page URL.
+   * @param pageURL
+   *          Identifier for a specific page URL.
    */
   public String getPageURL(String pageURL) {
 

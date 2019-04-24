@@ -10,6 +10,7 @@
 /bin
 /run.sh
 /run.bat
+*.class
 
 .DS_Store
 
