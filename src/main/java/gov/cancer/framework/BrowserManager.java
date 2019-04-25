@@ -3,20 +3,21 @@ package gov.cancer.framework;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import net.lightbody.bmp.BrowserMobProxy;
-import net.lightbody.bmp.client.ClientUtil;
-import org.apache.commons.lang3.SystemUtils;
 
+import org.apache.commons.lang3.SystemUtils;
+import org.openqa.selenium.Proxy;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.Proxy;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.WebDriver;
+
+import net.lightbody.bmp.BrowserMobProxy;
+import net.lightbody.bmp.client.ClientUtil;
 
 public class BrowserManager {
 
@@ -42,15 +43,16 @@ public class BrowserManager {
   /**
    * Create a new web driver for given browser and set that browser's options
    *
-   * @param browserName name of the browser
-   * @param url         URL to open
+   * @param browserName
+   *          name of the browser
+   * @param url
+   *          URL to open
    * @return WebDriver driver
    */
   public static WebDriver GetBrowser() {
 
     Configuration config = new Configuration();
     String browserName = config.getBrowser();
-
 
     WebDriver driver = null;
 
@@ -66,8 +68,6 @@ public class BrowserManager {
       System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
 
       driver = new ChromeDriver();
-
-      driver.manage().window().maximize();
     }
 
     else if (browserName.equalsIgnoreCase("firefox")) {
@@ -75,7 +75,6 @@ public class BrowserManager {
 
       System.setProperty("webdriver.gecko.driver", driverFullPath);
       driver = new FirefoxDriver();
-      driver.manage().window().maximize();
     }
 
     /* Headless Chrome */
@@ -89,7 +88,6 @@ public class BrowserManager {
       options.addArguments("headless");
       options.addArguments("window-size=1200x600"); // Testing large screens: Breakpoint 1024px
       driver = new ChromeDriver(options);
-      driver.manage().window().maximize();
     }
 
     /* Headless Firefox */
@@ -101,8 +99,6 @@ public class BrowserManager {
       FirefoxOptions firefoxOptions = new FirefoxOptions();
       firefoxOptions.setBinary(firefoxBinary);
       driver = new FirefoxDriver(firefoxOptions);
-
-      driver.manage().window().maximize();
     }
 
     else if (browserName.equalsIgnoreCase("iphone6")) {
@@ -142,8 +138,10 @@ public class BrowserManager {
    * Modified from
    * https://github.com/lightbody/browsermob-proxy#using-with-selenium
    *
-   * @param browserName name of the browser
-   * @param url         URL to open
+   * @param browserName
+   *          name of the browser
+   * @param url
+   *          URL to open
    * @return WebDriver driver TODO: create headless Chrome driver TODO: reuse
    *         startBrowser where possible
    */

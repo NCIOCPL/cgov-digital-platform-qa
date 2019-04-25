@@ -1,5 +1,6 @@
 package gov.cancer.pageobject.crosscutting;
 
+import org.openqa.selenium.WebElement;
 import gov.cancer.framework.ElementHelper;
 import gov.cancer.pageobject.PageObjectBase;
 
@@ -9,12 +10,12 @@ import gov.cancer.pageobject.PageObjectBase;
  */
 public class PublicUsePage extends PageObjectBase {
 
-  // Public Use Text in English and Spanish Languages
-  final public String publicUse_english = "If you would like to reproduce some or all of this content";
-  final public String publicUse_spanish = "Si desea copiar algo de este texto";
+  // The section being targeted. Because the section may not be present,
+  // it must searched for in the constructor instead of with a FindBy annotation.
+  WebElement targetedSection = null;
 
-  // Public Use Text
-  final public String publicUse = ".public-use";
+  // CSS selector for locating the section.
+  String publicUseText = ".public-use";
 
   // Page Title Element
   final public String pageTitle = "#main h1";
@@ -30,14 +31,14 @@ public class PublicUsePage extends PageObjectBase {
    * Getting Public Use Text length
    */
   public String getPublicUseTextLength() {
-    return ElementHelper.findElement(getBrowser(), publicUse).getText();
+    return ElementHelper.findElement(getBrowser(), publicUseText).getText();
   }
 
   /*
    * Check if Public Use Text contains title of the page.
    */
-  public boolean isPublicUseContainsTitle() {
-    return ElementHelper.findElement(getBrowser(), publicUse).getText().contains(this.getPageTitle());
+  public String isPublicUseContainsTitle() {
+    return ElementHelper.findElement(getBrowser(), publicUseText).getText();
   }
 
   /**
@@ -47,35 +48,36 @@ public class PublicUsePage extends PageObjectBase {
    */
   public PublicUsePage(String path) {
     super(path);
+    // Locate the section if it's available.
+    targetedSection = ElementHelper.findElement(this.getBrowser(), publicUseText);
   }
 
   /**
-   * Reports whether the Public Use Text is visible.
+   * Reports whether the section this page is looking for is visible.
    *
-   * @return True if the Public Use Text is visible. False if page has no Public
-   *         Use text
+   * Returns TRUE if the section is present and visible, returns false otherwise.
+   * Note: This means that if the section is missing from the page altogether, it
+   * is considered not visible.
    */
-  public boolean isPublicUseTextPresent() {
-    if (ElementHelper.findElement(getBrowser(), publicUse) != null)
-      return ElementHelper.findElement(getBrowser(), publicUse).isDisplayed();
+  public boolean sectionIsVisible() {
+    if (targetedSection != null)
+      return targetedSection.isDisplayed();
     else
       return false;
   }
 
-  /*
-   * Returns the language of the Public Use Text to compare with Data provider
+  /**
+   * Repots whether the Public Use Text section contains the specified text.
    *
+   * @param searchText The text to seazrch for.
+   * @return True if the text is found, false otherwise.
+   *
+   *         NOTE: If the Public Use Text section does not appear on the page, it
+   *         cannot contain text and this method will return false;
    */
-  public String getPublicUseTextLanguage() {
-    String language = null;
-    String header = ElementHelper.findElement(getBrowser(), publicUse).getText();
+  public boolean sectionContainsText(String searchText) {
 
-    if (header.startsWith(publicUse_english)) {
-      language = "English";
-    } else if (header.startsWith(publicUse_spanish)) {
-      language = "Spanish";
-    }
-    return language;
+    return ElementHelper.elementContainsText(targetedSection, searchText);
   }
 
 }

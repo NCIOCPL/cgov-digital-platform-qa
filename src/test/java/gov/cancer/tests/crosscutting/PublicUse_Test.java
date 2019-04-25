@@ -26,7 +26,7 @@ public class PublicUse_Test extends TestObjectBase {
     TestRunner.run(PublicUsePage.class, path, (PublicUsePage page) -> {
 
       // Asserting if Public Use section is visible
-      Assert.assertTrue(page.isPublicUseTextPresent(), "Public Use Text is visible.");
+      Assert.assertTrue(page.sectionIsVisible(), "Public Use section is displayed.");
 
     });
   }
@@ -38,12 +38,12 @@ public class PublicUse_Test extends TestObjectBase {
    * @param path Path of the page to check.
    */
   @Test(dataProvider = "getPublicUsePaths")
-  public void verifyContainsPageTitle(String path) {
+  public void verifyPublicUseContainsPageTitle(String path) {
 
     TestRunner.run(PublicUsePage.class, path, (PublicUsePage page) -> {
 
       // Asserting if Public Use Text contains Title
-      Assert.assertTrue(page.isPublicUseContainsTitle(), "Public Use Text Contains page title.");
+      Assert.assertTrue(page.isPublicUseContainsTitle().contains(page.getPageTitle()));
 
     });
   }
@@ -67,23 +67,60 @@ public class PublicUse_Test extends TestObjectBase {
   }
 
   /**
-   * 
-   * Is public use text displays in language it's expected?
+   * Verify that the correct translation is used when displaying the Punlic Use
+   * text field.
    *
-   * @param path     Path of the page to check.
-   * @param language language of the public use text to verify.
-   * 
+   * @param path            Path of the page to check.
+   * @param language        The language used on the page.
+   * @param translationText A snippet of text which occurs on the expected
+   *                        translation but does not appear on alternate
+   *                        translations. NOTE: this text must not include tags in
+   *                        the target markup.
    */
-  @Test(dataProvider = "getPublicUseLanguagePaths")
-  public void verifyPublicUseTextLanguage(String path, String language) {
+  @Test(dataProvider = "getPagesWithTranslations")
+  public void verifyPublicUseTextLanguage(String path, String translationText) {
 
     TestRunner.run(PublicUsePage.class, path, (PublicUsePage page) -> {
 
-      // Asserting language of the Public Use Text to compare with Data provider
-      String Currentlanguage = page.getPublicUseTextLanguage().trim();
-      Assert.assertTrue(Currentlanguage.matches(language), "text is displayed in correct language.");
+      // Asserting Public Use text language
+      Assert.assertTrue(page.sectionContainsText(translationText), "Correct translation found");
 
     });
+  }
+
+  /**
+   * Retrieves a list of paths to pages which are NOT expected to have public use
+   * text.
+   *
+   * @return An iterable list of single element arrays, each containing a single
+   *         path.
+   */
+  @Test(dataProvider = "getPagesWithoutPublicUse")
+  public void verifyPublicUseDoesNotAppear(String path) {
+
+    TestRunner.run(PublicUsePage.class, path, (PublicUsePage page) -> {
+
+      // Asserting Public Use section field doesnot display
+      Assert.assertFalse(page.sectionIsVisible(), "Public Use section not displayed.");
+
+    });
+  }
+
+  /*******************************************
+   * DATA PROVIDERS
+   *******************************************/
+
+  /**
+   * Retrieves a list of paths for pages where the Public Use Text field was set
+   * and the page is therefore expected to be present.
+   *
+   * @return An iterator over a collection of object arrays containing the
+   *         requested data.
+   */
+  @DataProvider(name = "getPagesWithTranslations")
+  public Iterator<Object[]> getPagesWithTranslations() {
+    String[] columns = { "path", "translated_text" };
+    return new ExcelDataReader(getDataFilePath("public-use-data.xlsx"), "pages_with_public_use", columns);
   }
 
   /**
@@ -110,24 +147,6 @@ public class PublicUse_Test extends TestObjectBase {
   public Iterator<Object[]> getPublicUseLanguagePaths() {
     String[] columns = { "path", "language" };
     return new ExcelDataReader(getDataFilePath("public-use-data.xlsx"), "pages_with_public_use", columns);
-  }
-
-  /**
-   * Retrieves a list of paths to pages which are NOT expected to have public use
-   * text.
-   *
-   * @return An iterable list of single element arrays, each containing a single
-   *         path.
-   */
-  @Test(dataProvider = "getPagesWithoutPublicUse")
-  public void verifyPublicUseDoesNotAppear(String path) {
-
-    TestRunner.run(PublicUsePage.class, path, (PublicUsePage page) -> {
-
-      // Asserting Public Use section field doesnot display
-      Assert.assertFalse(page.isPublicUseTextPresent(), "Pages without Public Use text.");
-
-    });
   }
 
   /**

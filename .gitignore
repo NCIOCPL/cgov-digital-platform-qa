@@ -1,15 +1,21 @@
 
+/.classpath
+/.factorypath
 /.settings
+/.vscode
+
+/bin
 /target
 /test-output
-/.vscode
 /test-data/~$*.xlsx
+
 /debug.log
 /.classpath
 /.factorypath
 /bin
 /run.sh
 /run.bat
+*.class
 
 .DS_Store
 
