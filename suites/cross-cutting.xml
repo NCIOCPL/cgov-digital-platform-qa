@@ -15,7 +15,8 @@
 
   <test name="Related Resources tests." preserve-order="true">
     <classes>
-      <class name="gov.cancer.tests.crosscutting.RelatedResources_Test" />
+      <class
+        name="gov.cancer.tests.crosscutting.RelatedResources_Test" />
     </classes>
   </test>
 
@@ -27,13 +28,19 @@
 
   <test name="Language Toggle tests." preserve-order="true">
     <classes>
-      <class name="gov.cancer.tests.crosscutting.LanguageToggle_Test" />
+      <class
+        name="gov.cancer.tests.crosscutting.LanguageToggle_Test" />
     </classes>
   </test>
-
   <test name="Simple Dates tests." preserve-order="true">
     <classes>
       <class name="gov.cancer.tests.crosscutting.SimpleDates_Test" />
     </classes>
   </test>
+  <test name="Public Use tests." preserve-order="true">
+    <classes>
+      <class name="gov.cancer.tests.crosscutting.PublicUse_Test" />
+    </classes>
+  </test>
+
 </suite>
