@@ -43,7 +43,7 @@ public class PublicUse_Test extends TestObjectBase {
     TestRunner.run(PublicUsePage.class, path, (PublicUsePage page) -> {
 
       // Asserting if Public Use Text contains Title
-      Assert.assertTrue(page.isPublicUseContainsTitle().contains(page.getPageTitle()));
+      Assert.assertTrue(page.getPublicUseText().contains(page.getPageTitle()));
 
     });
   }

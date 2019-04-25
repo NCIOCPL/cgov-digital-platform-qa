@@ -20,6 +20,17 @@ public class PublicUsePage extends PageObjectBase {
   // Page Title Element
   final public String pageTitle = "#main h1";
 
+  /**
+   * Constructor
+   *
+   * @param path server-relative path of the page to load.
+   */
+  public PublicUsePage(String path) {
+    super(path);
+    // Locate the section if it's available.
+    targetedSection = ElementHelper.findElement(this.getBrowser(), publicUseText);
+  }
+
   /*
    * Getting Page Title text
    */
@@ -37,19 +48,8 @@ public class PublicUsePage extends PageObjectBase {
   /*
    * Check if Public Use Text contains title of the page.
    */
-  public String isPublicUseContainsTitle() {
+  public String getPublicUseText() {
     return ElementHelper.findElement(getBrowser(), publicUseText).getText();
-  }
-
-  /**
-   * Constructor
-   *
-   * @param path server-relative path of the page to load.
-   */
-  public PublicUsePage(String path) {
-    super(path);
-    // Locate the section if it's available.
-    targetedSection = ElementHelper.findElement(this.getBrowser(), publicUseText);
   }
 
   /**
