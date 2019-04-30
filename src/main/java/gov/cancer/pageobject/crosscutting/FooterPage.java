@@ -74,7 +74,7 @@ public class FooterPage extends PageObjectBase {
 
   /* Returns true if Footer is displayed once on the page */
   public boolean isFooterVisibleOnce() {
-    List<WebElement> findfooter = ElementHelper.findElements(pageFooter, "footer[class='site-footer']");
+    List<WebElement> findfooter = ElementHelper.findElements(getBrowser(), "footer[class='site-footer']");
     int footerexists = findfooter.size();
     if (footerexists == 1) {
       return true;
