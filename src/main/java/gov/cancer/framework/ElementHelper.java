@@ -37,7 +37,7 @@ public class ElementHelper {
 
   /**
    * This method returns the list of elements on the page defined by a certain
-   * selector.
+   * selector. If no elements are found, an empty list is returned.
    *
    * @param parent
    *          - page WebDriver or WebElement.
@@ -47,11 +47,7 @@ public class ElementHelper {
   public static List<WebElement> findElements(SearchContext parent, String selector) {
 
     List<WebElement> findList = parent.findElements(By.cssSelector(selector));
-    if (findList.size() > 0) {
-      return findList;
-    } else {
-      return null;
-    }
+    return findList;
   }
 
   /**
@@ -113,4 +109,19 @@ public class ElementHelper {
 }
   
 
+  /**
+   * Retrieves the list of discrete names in a WebElement's class
+   * attribute
+   * @param element The element to use.
+   * @return Array of String objects. If the element has no class
+   * attribute, an empty array is returned.
+   */
+  public static String[] getClassList(WebElement element) {
+
+    String attrib = element.getAttribute("class");
+    if (attrib == null)
+      return new String[0];
+
+    return attrib.split("\\s");
+  }
 }
