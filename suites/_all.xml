@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="NCI Automation - All Test Cases" parallel="tests" verbose="10">
+<suite name="NCI Automation - All Test Cases" parallel="tests"
+  verbose="10">
   <!-- This suite should simply be a list of all the feature-level suites. -->
   <suite-files>
     <suite-file path="suites/cross-cutting.xml" />
     <suite-file path="suites/fields.xml" />
+    <suite-file path="suites/images.xml" />
   </suite-files>
 </suite>
 

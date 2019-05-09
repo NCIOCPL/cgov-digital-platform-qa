@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Tests for images" parallel="none">
+
+  <test name="LeadImage tests." preserve-order="true">
+    <classes>
+      <class name="gov.cancer.tests.image.LeadImage_Test" />
+    </classes>
+  </test>
+
+
+</suite>

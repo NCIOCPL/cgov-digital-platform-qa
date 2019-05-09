@@ -93,5 +93,24 @@ public class ElementHelper {
       return false;
     }
   }
+  
+  /**
+   * This method returns the list of elements on the page defined by a certain
+   * selector.
+   *
+   * @param parent
+   *          - page WebDriver or WebElement.
+   * @param selector
+   *          - CSS selector string.
+   */
+  public static String getText(SearchContext context, String selector) {
+    WebElement element = findElement(context, selector);
+    if (element != null) {
+      return element.getText();
+    } else {
+      return null;
+    }
+}
+  
 
 }
