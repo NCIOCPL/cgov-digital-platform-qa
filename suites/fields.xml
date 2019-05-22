@@ -8,4 +8,10 @@
     </classes>
   </test>
 
+  <test name="Search Engine Restrictions.">
+    <classes>
+      <class
+        name="gov.cancer.tests.fields.SearchEngineRestrictions_Test" />
+    </classes>
+  </test>
 </suite>
