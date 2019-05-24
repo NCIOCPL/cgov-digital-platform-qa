@@ -1,7 +1,7 @@
 ---
-name: YAML Content Request
-about: Request a new YAML content module item.
-title: YAML Content Request
+name: Content Request
+about: Request new static content item(s).
+title: Content Request
 labels: ''
 assignees: ''
 

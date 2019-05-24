@@ -10,8 +10,12 @@
 
   <test name="Search Engine Restrictions.">
     <classes>
-      <class
-        name="gov.cancer.tests.fields.SearchEngineRestrictions_Test" />
+      <class name="gov.cancer.tests.fields.SearchEngineRestrictions_Test">
+        <methods>
+          <!-- Disabled due to lack of test data. Issue NCIOCPL/cgov-digital-platform-qa#80-->
+          <exclude name="verifyExcludeFromSearchIsSelected" />
+        </methods>
+      </class>
     </classes>
   </test>
 </suite>
