@@ -9,7 +9,7 @@ public class MetaTag {
   /**
    * this is the element representing the entire metatag.
    */
-  WebElement element;
+  private WebElement element;
 
   /**
    * Metatag property
@@ -20,10 +20,17 @@ public class MetaTag {
   }
 
   /**
-   * Returns the content of the robot meta tag
+   * Returns the 'content' attribute of the meta tag
    */
   public String getContent() {
     return this.element.getAttribute("content");
+  }
+
+  /**
+   * Returns the 'getHref' attribute of the meta tag
+   */
+  public String getHref() {
+    return this.element.getAttribute("hreflang");
   }
 
 }

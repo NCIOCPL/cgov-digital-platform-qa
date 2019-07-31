@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Tests for MetaData." parallel="tests" thread-count="2" >
+
+  <test name="MetaData_DCTerms tests" preserve-order="true">
+    <classes>
+      <class
+        name="gov.cancer.tests.metaData.MetaData_DCTerms_Test" />
+    </classes>
+  </test>
+
+  <test name="MetaData_OG tests" preserve-order="true">
+    <classes>
+      <class
+        name="gov.cancer.tests.metaData.MetaData_OG_Test" />
+    </classes>
+  </test>
+
+  <test name="MetaData tests" preserve-order="true">
+    <classes>
+      <class
+        name="gov.cancer.tests.metaData.MetaData_Test" />
+    </classes>
+  </test>
+
+</suite>

@@ -7,7 +7,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import gov.cancer.framework.ExcelDataReader;
-import gov.cancer.pageobject.crosscutting.PageWithMetaTag;
+import gov.cancer.pageobject.crosscutting.PageWithMetaData;
 import gov.cancer.pageobject.helper.RobotMetaTag;
 import gov.cancer.tests.TestObjectBase;
 import gov.cancer.tests.TestRunner;
@@ -23,7 +23,7 @@ public class SearchEngineRestrictions_Test extends TestObjectBase {
   @Test(dataProvider = "getPagesWithIndex")
   public void verifyIncludeSearchIsSelected(String path) {
 
-    TestRunner.run(PageWithMetaTag.class, path, (PageWithMetaTag page) -> {
+    TestRunner.run(PageWithMetaData.class, path, (PageWithMetaData page) -> {
       RobotMetaTag rmt = page.getRobotMetaTag();
       Assert.assertTrue(rmt.getAllowSearch(), "Found index as Robot Metatag content");
 
@@ -41,7 +41,7 @@ public class SearchEngineRestrictions_Test extends TestObjectBase {
   @Test(dataProvider = "getPagesWithNoIndex")
   public void verifyExcludeFromSearchIsSelected(String path) {
 
-    TestRunner.run(PageWithMetaTag.class, path, (PageWithMetaTag page) -> {
+    TestRunner.run(PageWithMetaData.class, path, (PageWithMetaData page) -> {
       RobotMetaTag rmt = page.getRobotMetaTag();
       Assert.assertFalse(rmt.getAllowSearch(), "Error: Found index as Robot Metatag content");
 
