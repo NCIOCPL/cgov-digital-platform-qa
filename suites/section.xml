@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Tests for specific fields." parallel="tests" thread-count="3">
+<suite name="Tests for specific sections." parallel="tests" thread-count="3">
 
   <test name="Feature Cards Tests.">
     <classes>
@@ -12,5 +12,10 @@
       <class name="gov.cancer.tests.section.RecommendedContent_Test" />
     </classes>
   </test>
+	<test name="ManagedLists.">
+		<classes>
+			<class name="gov.cancer.tests.section.ManagedList_Test" />
+		</classes>
+	</test>
 
 </suite>
