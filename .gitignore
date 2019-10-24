@@ -13,6 +13,7 @@
 /.classpath
 /.factorypath
 /bin
+/.idea
 /run.sh
 /run.bat
 *.class
