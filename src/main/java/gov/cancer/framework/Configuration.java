@@ -208,4 +208,19 @@ public class Configuration {
     return properties.getProperty(property);
   }
 
+
+  /**
+   * Gets the timeout value for an implicit wait
+   *
+   */
+  public int getImplicitTimeout (){
+
+    int timeout = Integer.parseInt(properties.getProperty("timeout.implicit"));
+    if (timeout!=0) {
+      return timeout;
+    } else
+    return 20;
+}
+
+
 }

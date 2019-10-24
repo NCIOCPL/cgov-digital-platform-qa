@@ -44,7 +44,7 @@ public class BrowserManager {
    * Create a new web driver for given browser and set that browser's options
    *
    * @param browserName
-   *          name of the browser
+   * name of the browser
    * @param url
    *          URL to open
    * @return WebDriver driver
@@ -128,7 +128,7 @@ public class BrowserManager {
     }
 
     // Allow up to a one second delay for elements to become available.
-    driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+    driver.manage().timeouts().implicitlyWait(config.getImplicitTimeout(), TimeUnit.SECONDS);
 
     return driver;
   }
