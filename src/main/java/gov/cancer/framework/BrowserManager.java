@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.lang3.SystemUtils;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
@@ -61,29 +62,19 @@ public class BrowserManager {
     java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(java.util.logging.Level.OFF);
 
     if (browserName.equalsIgnoreCase("chrome")) {
-
-      String driverFullPath = getDriverPath(config, "ChromeDriver");
-      System.setProperty("webdriver.chrome.driver", driverFullPath);
-
-      System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
-
+      WebDriverManager.chromedriver().setup();
       driver = new ChromeDriver();
     }
 
     else if (browserName.equalsIgnoreCase("firefox")) {
-      String driverFullPath = getDriverPath(config, "FirefoxDriver");
-
-      System.setProperty("webdriver.gecko.driver", driverFullPath);
+      WebDriverManager.firefoxdriver().setup();
       driver = new FirefoxDriver();
     }
 
     /* Headless Chrome */
     else if (browserName.equalsIgnoreCase("chromeheadless")) {
 
-      String driverFullPath = getDriverPath(config, "ChromeDriver");
-      System.setProperty("webdriver.chrome.driver", driverFullPath);
-      System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
-
+      WebDriverManager.chromedriver().setup();
       ChromeOptions options = new ChromeOptions();
       options.addArguments("headless");
       options.addArguments("window-size=1200x600"); // Testing large screens: Breakpoint 1024px
@@ -92,20 +83,12 @@ public class BrowserManager {
 
     /* Headless Firefox */
     else if (browserName.equalsIgnoreCase("firefoxheadless")) {
-      FirefoxBinary firefoxBinary = new FirefoxBinary();
-      firefoxBinary.addCommandLineOptions("--headless");
-      String driverFullPath = getDriverPath(config, "FirefoxDriver");
-      System.setProperty("webdriver.gecko.driver", driverFullPath);
-      FirefoxOptions firefoxOptions = new FirefoxOptions();
-      firefoxOptions.setBinary(firefoxBinary);
-      driver = new FirefoxDriver(firefoxOptions);
+      WebDriverManager.firefoxdriver().setup();
+      driver = new FirefoxDriver(new FirefoxOptions().setHeadless(true));
     }
 
     else if (browserName.equalsIgnoreCase("iphone6")) {
-
-      System.setProperty("webdriver.chrome.driver", getDriverPath(config, "ChromeDriver"));
-      System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
-
+      WebDriverManager.chromedriver().setup();
       Map<String, Object> mobileEmulation = new HashMap<>();
       mobileEmulation.put("deviceName", "iPhone 6");
       ChromeOptions chromeOptions = new ChromeOptions();
@@ -115,8 +98,7 @@ public class BrowserManager {
 
     else if (browserName.equalsIgnoreCase("ipad")) {
 
-      System.setProperty("webdriver.chrome.driver", getDriverPath(config, "ChromeDriver"));
-      System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
+      WebDriverManager.chromedriver().setup();
 
       Map<String, Object> mobileEmulation = new HashMap<>();
       mobileEmulation.put("deviceName", "iPad");
@@ -127,7 +109,8 @@ public class BrowserManager {
       driver = new ChromeDriver(chromeOptions);
     }
 
-    // Allow up to a one second delay for elements to become available.
+    // Set up an implicit driver wait for FindElements (declared once, applied to all elements implicitly).
+    // Value is configured through configuration.properties
     driver.manage().timeouts().implicitlyWait(config.getImplicitTimeout(), TimeUnit.SECONDS);
 
     return driver;
@@ -149,6 +132,7 @@ public class BrowserManager {
 
     WebDriver driver = null;
 
+
     ChromeOptions chromeOptions = new ChromeOptions();
     FirefoxOptions firefoxOptions = new FirefoxOptions();
 
@@ -161,9 +145,17 @@ public class BrowserManager {
     java.util.logging.Logger.getLogger("org.openqa.selenium").setLevel(java.util.logging.Level.OFF);
 
     if (browserName.equalsIgnoreCase("Chrome")) {
-      String driverFullPath = getDriverPath(config, "ChromeDriver");
-      System.setProperty("webdriver.chrome.driver", driverFullPath);
-      System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
+
+      WebDriverManager.chromedriver().setup();
+
+      /**
+       * this could be the right config for WebDriverManager if capabilities don't function
+       *
+       * WebDriverManager.chromedriver().proxy(String proxy).setup();
+       */
+//      String driverFullPath = getDriverPath(config, "ChromeDriver");
+//      System.setProperty("webdriver.chrome.driver", driverFullPath);
+//      System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
 
       chromeOptions.setCapability(CapabilityType.PROXY, seleniumProxy);
       driver = new ChromeDriver(chromeOptions);
@@ -210,3 +202,4 @@ public class BrowserManager {
   }
 
 }
+
