@@ -14,6 +14,7 @@
 /.factorypath
 /bin
 /.idea
+/CancerGovDigitalPlatform.iml
 /run.sh
 /run.bat
 *.class
