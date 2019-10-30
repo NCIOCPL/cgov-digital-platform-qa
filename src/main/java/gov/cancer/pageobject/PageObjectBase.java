@@ -80,8 +80,8 @@ public abstract class PageObjectBase {
         // Clean up of additional disposable objects would go here.
       }
 
-      // Close the browser window.
-      browser.close();
+      // Kill an instance of the driver.
+      browser.quit();
 
       this.closed = true;
     }
