@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.log4j.varia.NullAppender;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -64,6 +65,8 @@ public abstract class TestObjectBase {
   // -------------------------------------------------------
   @BeforeClass(alwaysRun = true)
   public void beforeClass() {
+    //suppress Log4J info warning
+    org.apache.log4j.BasicConfigurator.configure(new NullAppender());
 
     logger = report.startTest(this.getClass().getSimpleName());
     System.out.println("\n  Running test: " + this.getClass().getSimpleName());
