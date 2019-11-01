@@ -5,6 +5,7 @@ import java.net.URL;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import gov.cancer.framework.Configuration;
+import gov.cancer.framework.ElementHelper;
 import gov.cancer.framework.LinkHelper;
 
 /*
@@ -21,10 +22,13 @@ public class RelatedResource {
   // Getting configuration file to access domain values
   Configuration config;
 
+  static final String LINK_SELECTOR = ":scope a:nth-child(1)";
+  static final String EXTLINK_SELECTOR = ":scope a:nth-child(2)";
+
   // Related Resources links
   public RelatedResource(WebElement element) {
     this.element = element;
-    resourceLink = element.findElement(By.cssSelector("a:nth-child(1)"));
+    resourceLink = ElementHelper.findElement(element, LINK_SELECTOR);
     config = new Configuration();
   }
 
@@ -33,7 +37,7 @@ public class RelatedResource {
    */
   public boolean hasExitDisclaimer() {
     // externalLink with icon-exit-notification
-    WebElement externalLink = element.findElement(By.cssSelector("a:nth-child(2)"));
+    WebElement externalLink = ElementHelper.findElement(element, EXTLINK_SELECTOR);
     return externalLink.isDisplayed() && externalLink.getAttribute("class").equals("icon-exit-notification");
   }
 
@@ -48,8 +52,8 @@ public class RelatedResource {
   }
 
   /*
-   * if element is null return false; else trim the element text and if its empty
-   * return false (ex: string between a tag)
+   * if element is null return false; else trim the element text and if its
+   * empty return false (ex: string between a tag)
    */
   public boolean isLinkTextBlank() {
     if (resourceLink != null)
@@ -68,8 +72,8 @@ public class RelatedResource {
   }
 
   /*
-   * Verifying Exit Disclaimer styling for Related Resource link that doesn't end
-   * with .gov,
+   * Verifying Exit Disclaimer styling for Related Resource link that doesn't
+   * end with .gov,
    */
   public boolean isExternal() {
     URL url = null;

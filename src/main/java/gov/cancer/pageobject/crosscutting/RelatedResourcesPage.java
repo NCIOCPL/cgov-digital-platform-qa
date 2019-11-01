@@ -3,9 +3,9 @@ package gov.cancer.pageobject.crosscutting;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import gov.cancer.framework.ElementHelper;
 import gov.cancer.pageobject.PageObjectBase;
 import gov.cancer.pageobject.helper.RelatedResource;
 
@@ -16,21 +16,19 @@ public class RelatedResourcesPage extends PageObjectBase {
    * whether it is null before using.
    */
   WebElement relatedResourcesSection;
+  final static String RELATED_LINK_SELECTOR = ":scope ul li";
 
   /**
    * Constructor
    *
-   * @param path server-relative path of the page to load.
+   * @param path
+   *          server-relative path of the page to load.
    */
   public RelatedResourcesPage(String path) {
     super(path);
 
     // Get the actual section, if it's present.
-    List<WebElement> findList = getBrowser().findElements(By.cssSelector("#nvcgRelatedResourcesArea"));
-    if (findList.size() > 0)
-      relatedResourcesSection = findList.get(0);
-    else
-      relatedResourcesSection = null;
+    relatedResourcesSection = ElementHelper.findElement(getBrowser(), "#nvcgRelatedResourcesArea");
 
   }
 
@@ -50,8 +48,7 @@ public class RelatedResourcesPage extends PageObjectBase {
 
     List<RelatedResource> links = new ArrayList<RelatedResource>();
 
-    List<WebElement> rawLinks = relatedResourcesSection.findElements(By.cssSelector("ul li"));
-
+    List<WebElement> rawLinks = ElementHelper.findElements(relatedResourcesSection, RELATED_LINK_SELECTOR);
     for (WebElement link : rawLinks) {
       links.add(new RelatedResource(link));
     }
