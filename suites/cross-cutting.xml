@@ -43,4 +43,10 @@
     </classes>
   </test>
 
+  <test name="Back to Top tests." preserve-order="true" >
+    <classes>
+      <class name="gov.cancer.tests.crosscutting.BackToTop_Test" />
+    </classes>
+  </test>
+
 </suite>
