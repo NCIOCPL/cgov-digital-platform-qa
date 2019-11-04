@@ -42,5 +42,10 @@
       <class name="gov.cancer.tests.crosscutting.PublicUse_Test" />
     </classes>
   </test>
+  <test name="Page Title tests" preserve-order="true">
+    <classes>
+      <class name="gov.cancer.tests.crosscutting.PageTitle_Test" />
+    </classes>
+  </test>
 
 </suite>
