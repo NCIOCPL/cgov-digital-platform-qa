@@ -222,5 +222,17 @@ public class Configuration {
     return 20;
 }
 
+  /**
+   * Method retrieves wait time for a mouse action from properties file
+   * @return
+   */
+  public int getMouseTimeout (){
+    int timeout = Integer.parseInt(properties.getProperty("timeout.mouseWait"));
+    if(timeout!=0){
+      return timeout;
+  }else
+    return 500;
+}
+
 
 }

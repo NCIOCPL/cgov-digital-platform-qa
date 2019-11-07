@@ -13,6 +13,7 @@
 /.classpath
 /.factorypath
 /bin
+/chromedriver.log
 /.idea
 /chromedriver.log
 /CancerGovDigitalPlatform.iml
