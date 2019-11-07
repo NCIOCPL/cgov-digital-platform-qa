@@ -54,5 +54,9 @@
       <class name="gov.cancer.tests.crosscutting.SiteNavigation_Test" />
     </classes>
   </test>
-
+  <test name="Mega Menu tests." preserve-order="true">
+    <classes>
+      <class name="gov.cancer.tests.crosscutting.MegaMenu_Test" />
+    </classes>
+  </test>
 </suite>
