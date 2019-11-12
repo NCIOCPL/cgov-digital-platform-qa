@@ -59,4 +59,5 @@
       <class name="gov.cancer.tests.crosscutting.MegaMenu_Test" />
     </classes>
   </test>
+
 </suite>
