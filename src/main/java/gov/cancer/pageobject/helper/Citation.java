@@ -4,12 +4,14 @@ import org.openqa.selenium.WebElement;
 
 import gov.cancer.framework.ElementHelper;
 
+import java.util.List;
+
 /**
  * Class representing a single citation.
  */
 public class Citation {
 
-  static final String TEXT_SELECTOR = ":scope p:nth-child(1)";
+  static final String TEXT_SELECTOR = ":scope p";
 
   // The selector for PUBMED links must look for an immediate child of the
   // scope in order to avoid catching links embedded in the citation text.
@@ -24,6 +26,11 @@ public class Citation {
   // The optional PUBMED link.
   private WebElement pubmedLink;
 
+  private List<WebElement> allChildren;
+
+  private final String childrenElements = ":scope >*";
+
+
   /**
    * Constructor
    *
@@ -33,7 +40,12 @@ public class Citation {
   public Citation(WebElement element) {
     this.theCitation = element;
     this.textElement = ElementHelper.findElement(theCitation, TEXT_SELECTOR);
-    this.pubmedLink = ElementHelper.findElement(theCitation, PUBMED_SELECTOR);
+    // allChildren list contains all child elements under citation - if has more than one child, it's pubMed
+    allChildren = ElementHelper.findElements(theCitation, childrenElements);
+    if (allChildren.size()>1){
+      pubmedLink = ElementHelper.findElement(theCitation, PUBMED_SELECTOR);
+    }
+
   }
 
   /**
@@ -51,7 +63,7 @@ public class Citation {
    * @return
    */
   public boolean hasPubMedLink() {
-    return (pubmedLink != null && pubmedLink.getText().contains("[PubMed Abstract]"));
+    return (pubmedLink != null && pubmedLink.getText().equals("[PubMed Abstract]"));
   }
 
   /**
@@ -62,7 +74,7 @@ public class Citation {
    */
   public Link getPubMedLink() {
 
-    if (pubmedLink != null && pubmedLink.getText().contains("[PubMed Abstract]")) {
+    if (pubmedLink != null && pubmedLink.getText().equals("[PubMed Abstract]")) {
       return new Link(pubmedLink);
 
     } else
