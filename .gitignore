@@ -8,6 +8,7 @@
 /target
 /test-output
 /test-data/~$*.xlsx
+/suites/_all.override.xml
 
 /debug.log
 /.classpath
