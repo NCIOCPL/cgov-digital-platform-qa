@@ -1,7 +1,7 @@
 package gov.cancer.tests.cts;
 
 import gov.cancer.framework.ExcelDataReader;
-import gov.cancer.pageobject.cts.TrialDescriptionPage;
+import gov.cancer.pageobject.cts.TrialDetailsPage;
 import gov.cancer.pageobject.helper.CTS_Section;
 import gov.cancer.tests.TestObjectBase;
 import gov.cancer.tests.TestRunner;
@@ -38,8 +38,8 @@ public class CTS_Common_Test extends TestObjectBase {
    */
   @Test (dataProvider = "getTrialDesc")
   public void verifyTrialDescPresent(String path) {
-    TestRunner.run(TrialDescriptionPage.class, path, (TrialDescriptionPage page) -> {
-      Assert.assertTrue(page.isTrialDescVisible(), "header is not present");
+    TestRunner.run(TrialDetailsPage.class, path, (TrialDetailsPage page) -> {
+      Assert.assertTrue(page.isHeaderDisplayed(), "header is not present");
 
     });
 
