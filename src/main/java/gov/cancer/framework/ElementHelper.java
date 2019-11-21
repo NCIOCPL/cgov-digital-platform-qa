@@ -89,7 +89,7 @@ public class ElementHelper {
       return false;
     }
   }
-  
+
   /**
    * This method returns the list of elements on the page defined by a certain
    * selector.
@@ -107,7 +107,7 @@ public class ElementHelper {
       return null;
     }
 }
-  
+
 
   /**
    * Retrieves the list of discrete names in a WebElement's class

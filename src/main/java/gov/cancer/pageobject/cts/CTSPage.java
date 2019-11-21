@@ -1,10 +1,12 @@
 package gov.cancer.pageobject.cts;
 
 import gov.cancer.framework.ElementHelper;
+import gov.cancer.framework.ParsedURL;
 import gov.cancer.pageobject.PageObjectBase;
 import gov.cancer.pageobject.components.Button;
 import gov.cancer.pageobject.components.Delighter;
 import gov.cancer.pageobject.components.TextField;
+import org.apache.http.NameValuePair;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -140,5 +142,19 @@ public class CTSPage extends PageObjectBase {
   public Delighter getWhatAreClinicalTrialsDelighter() {
     whatAreClinicalTrialsDelighter = new Delighter(ElementHelper.findElement(getBrowser(), WHAT_ARE_TRIALS_DELIGHTER_LOCATOR));
     return whatAreClinicalTrialsDelighter;
+  }
+
+  /**
+   * retrieve header text
+   */
+  public String getPageHeader(){
+    return header.getText();
+  }
+
+  /**
+   * Method retrieves list of current page url query parameters and value pairs
+   */
+  public List<NameValuePair> getCurrentUlrQueryParameters (){
+    return ParsedURL.getParamArrayList(getBrowser().getCurrentUrl());
   }
 }

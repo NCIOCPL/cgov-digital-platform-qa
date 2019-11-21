@@ -18,9 +18,12 @@ public class Pager extends Component {
   private Button previousButton;
   // Next arrow button
   private Button nextButton;
+  // main pager element
+  private WebElement section;
 
 
   private final static String PAGER_BUTTON_LOCATOR = ":scope >div";
+  private final static String ACTIVE_PAGE_LOCATOR = ":scope div[class$='--active']";
 
   /**
    * Constructor
@@ -29,6 +32,7 @@ public class Pager extends Component {
    */
   public Pager(WebElement element) {
     super(element);
+    section =element;
     List <WebElement> allButtons = ElementHelper.findElements(element, PAGER_BUTTON_LOCATOR);
    for (WebElement we : allButtons){
      pagerButtons.add(new Button(we));
@@ -70,5 +74,10 @@ public class Pager extends Component {
   public Button getNextButton(){
     return nextButton;
   }
-
+  /**
+   * Method returns the active(selected) page button
+   */
+  public Button getCurrentButton() {
+    return new Button(ElementHelper.findElement(section, ACTIVE_PAGE_LOCATOR));
+  }
 }

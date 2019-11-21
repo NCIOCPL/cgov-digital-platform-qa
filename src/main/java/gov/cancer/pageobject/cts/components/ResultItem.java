@@ -34,7 +34,7 @@ public class ResultItem extends Component {
 
   private final static String CHECK_BOX_LOCATOR = ":scope .cts-checkbox";
   private final static String TITLE_LINK_LOCATOR = ":scope a";
-  private final static String STATUS_LOCATOR = ":scope div[class$='__contents'] div[class$='__category'] :nth-child(2)";
+  private final static String STATUS_LOCATOR = ":scope div[class$='__contents'] :nth-child(2)";
   private final static String AGE_LOCATOR = ":scope div[class$='__contents'] :nth-child(3)";
   private final static String GENDER_LOCATOR = ":scope div[class$='__contents'] :nth-child(4)";
   private final static String LOCATION_LOCATOR = ":scope div[class$='__contents'] :nth-child(5)";

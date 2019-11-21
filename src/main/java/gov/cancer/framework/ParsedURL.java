@@ -117,4 +117,12 @@ public class ParsedURL {
     return rtnParams;
   }
 
+  /**
+   * Method return Host portion of URL
+   * @return
+   */
+  public String getHost (){
+    return innerUrl.getHost();
+  }
+
 }

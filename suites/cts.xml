@@ -4,14 +4,9 @@
 
   <test name="CTS Common tests." preserve-order="true">
     <classes>
-      <class name="gov.cancer.tests.cts.CTS_Common_Test" />
-    </classes>
-  </test>
-  <test name="CTS Basic Search Form Functionality tests." preserve-order="true">
-    <classes>
       <class name="gov.cancer.tests.cts.CTS_BasicSearchFunctionality_Test" />
+      <class name="gov.cancer.tests.cts.Search_Results_Test" />
     </classes>
   </test>
-
 
 </suite>

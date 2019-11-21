@@ -14,7 +14,7 @@ public class ResultListSection extends Component {
   // list of  results items objects
   private List<ResultItem> resultItemList = new ArrayList<>();
 
-  private static final String RESULT_ITEM_LOCATOR = ":scope >div";
+  private static final String RESULT_ITEM_LOCATOR = "div[class$='list__item']";
 
   /**
    * Constructor
@@ -25,7 +25,7 @@ public class ResultListSection extends Component {
     super(element);
     List <WebElement> resItemsWebElement = ElementHelper.findElements(element, RESULT_ITEM_LOCATOR);
     for (WebElement we : resItemsWebElement){
-      resultItemList.add(new ResultItem(we));
+      this.resultItemList.add(new ResultItem(we));
     }
   }
 
