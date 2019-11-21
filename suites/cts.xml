@@ -8,5 +8,11 @@
     </classes>
   </test>
 
+  <test name="CTS Basic Search Functionality tests." preserve-order="true">
+    <classes>
+      <class name="gov.cancer.tests.cts.CTS_BasicSearchFunctionality_Test" />
+    </classes>
+  </test>
+
 
 </suite>

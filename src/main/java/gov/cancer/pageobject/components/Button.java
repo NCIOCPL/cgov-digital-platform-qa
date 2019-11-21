@@ -1,15 +1,13 @@
 package gov.cancer.pageobject.components;
 
-import gov.cancer.framework.Configuration;
-import org.openqa.selenium.StaleElementReferenceException;
+import gov.cancer.framework.MouseActionHelper;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class Button extends CGovField {
 
   //Element represents any button
   private WebElement button;
-  //Configuration object
-  private Configuration config;
 
   /**
    * Constructor
@@ -22,9 +20,11 @@ public class Button extends CGovField {
 
   /**
    * Method is used for clicking on the button
+   * 'Timeout loop' is used to prevent StaleElement exception to be thrown. It artificially wait for 400 milli second
+   * until attempts to click on element again
    */
-  public void click(){
-   button.click();
+  public void click() {
+button.click();
   }
 
 }

@@ -1,8 +1,8 @@
 package gov.cancer.tests.cts;
 
 import gov.cancer.framework.ExcelDataReader;
+import gov.cancer.pageobject.cts.CTSPage;
 import gov.cancer.pageobject.cts.TrialDetailsPage;
-import gov.cancer.pageobject.helper.CTS_Section;
 import gov.cancer.tests.TestObjectBase;
 import gov.cancer.tests.TestRunner;
 import org.testng.Assert;
@@ -23,7 +23,7 @@ public class CTS_Common_Test extends TestObjectBase {
    */
   @Test (dataProvider = "getCTSPages")
   public void verifyCTSPresent(String path) {
-    TestRunner.run(CTS_Section.class, path, (CTS_Section page) -> {
+    TestRunner.run(CTSPage.class, path, (CTSPage page) -> {
       Assert.assertTrue(page.isHeaderDisplayed(), "header field is not present");
 
     });
