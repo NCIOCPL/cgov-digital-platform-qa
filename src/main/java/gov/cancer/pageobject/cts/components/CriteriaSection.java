@@ -25,10 +25,9 @@ public class CriteriaSection extends Component {
   /**
    * Constructor
    *
-   * @param element
-   *        - WebElement defining criteria section
+   * @param element - WebElement defining criteria section
    */
-  public CriteriaSection( WebElement element) {
+  public CriteriaSection(WebElement element) {
     super(element);
     criteriaSection = element;
     showSearchCriteria = new Button(ElementHelper.findElement(criteriaSection, SHOW_SEARCH_CRITERIA_LOCATOR));
@@ -40,50 +39,57 @@ public class CriteriaSection extends Component {
   /**
    * Adds all labels and values to the map.
    * Where label is 'Category'
-   *       value is 'Your Selection'
-   *
+   * value is 'Your Selection'
    */
-  public void buildCriteriaMap() {
+  private Map<String, String> buildCriteriaMap() {
     List<WebElement> labelCell = ElementHelper.findElements(criteriaSection, LABEL_LOCATOR);
     List<WebElement> valueCell = ElementHelper.findElements(criteriaSection, VALUE_LOCATOR);
     for (int i = 0; i < labelCell.size(); i++) {
       criteriaMap.put(labelCell.get(i).getText(), valueCell.get(i).getText());
     }
+    return criteriaMap;
   }
 
   /**
    * Method to expand Search Criteria table
    */
-  public void expand (){
+  public void expand() {
     showSearchCriteria.click();
   }
+
   /**
    * Gets the Criterion associated with label. Note that this method may return
    * null if the label was not defined.
    *
    * @param label The 'Category' value to retrieve.
-   *
    * @return String 'Your Selection' value .
    */
   public String getSelectionValue(String label) {
-    return criteriaMap.get(label);
+
+    return buildCriteriaMap().get(label);
   }
 
   /**
    * Checks if the label is a valid key in the criteria map
-   * @param label
-   *            - label to search for in the key set
+   *
+   * @param label - label to search for in the key set
    * @return
    */
-  public boolean isCategoryPresent (String label){
-    return criteriaMap.containsKey(label);
+  public boolean isCategoryPresent(String label) {
+    return buildCriteriaMap().containsKey(label);
   }
 
   /**
-   * Check is the criteria drop down table expanded
+   * Check if the criteria drop down table expanded
    */
-
-  public boolean isExpanded(){
+  public boolean isExpanded() {
     return Boolean.parseBoolean(criteriaSection.getAttribute("aria-expanded"));
+  }
+  /**
+   * Returns number of entries in the criteria map
+   */
+  public int getNumberOfEntriesInTheMap(){
+
+    return buildCriteriaMap().keySet().size();
   }
 }

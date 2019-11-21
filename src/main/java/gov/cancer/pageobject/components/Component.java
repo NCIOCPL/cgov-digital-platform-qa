@@ -11,19 +11,22 @@ public class Component {
 
   /**
    * Constructor
-   * @param element
-   *         - component element
+   *
+   * @param element - component element
    */
-  public Component(WebElement element){
+  public Component(WebElement element) {
     this.element = element;
   }
 
   /**
    * return whether or not component element is displayed
+   *
    * @return
    */
-  public boolean isVisible(){
-    return this.element.isDisplayed();
-
+  public boolean isVisible() {
+    if (element != null)
+      return this.element.isDisplayed();
+    else
+      return false;
   }
 }

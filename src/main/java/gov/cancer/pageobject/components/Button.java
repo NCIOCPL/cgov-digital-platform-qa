@@ -26,5 +26,11 @@ public class Button extends CGovField {
   public void click(){
    button.click();
   }
+  /**
+   * Method to retrieve text stored in button
+   */
+  public String getText(){
+    return button.getText();
+  }
 
 }
