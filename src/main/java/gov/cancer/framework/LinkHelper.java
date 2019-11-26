@@ -15,7 +15,8 @@ public class LinkHelper {
     Configuration config = new Configuration();
 
     String hostName = url.getHost();
-    if (hostName.endsWith(".gov") || hostName.endsWith(config.getInternalDomain())) {
+
+    if (hostName.endsWith(".gov") || hostName.endsWith(config.getInternalDomain()) || hostName.contains("ncigovcdode")) {
 
       return false;
     } else
