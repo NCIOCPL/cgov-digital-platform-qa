@@ -7,6 +7,7 @@
     <suite-file path="suites/cross-cutting.xml" />
     <suite-file path="suites/fields.xml" />
     <suite-file path="suites/images.xml" />
+    <suite-file path="suites/section.xml" />
   </suite-files>
 </suite>
 
