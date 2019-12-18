@@ -69,6 +69,17 @@ public class ElementHelper {
   }
 
   /**
+   * This method returns true if the element is visible.
+   *
+   * @param element
+   *          - WebElement to check.
+   */
+  public static boolean isVisible(WebElement element) {
+
+    return element.isDisplayed();
+  }
+
+  /**
    * Tests whether the text of the specified WebElement contains a specific
    * substring. NOTE: This is a simple, case-sensitive search and does not account
    * for markup contained in the target WebElement. E.g. A search for "the big
@@ -89,12 +100,12 @@ public class ElementHelper {
       return false;
     }
   }
-  
+
   /**
    * This method returns the list of elements on the page defined by a certain
    * selector.
    *
-   * @param parent
+   * @param context
    *          - page WebDriver or WebElement.
    * @param selector
    *          - CSS selector string.
@@ -107,7 +118,17 @@ public class ElementHelper {
       return null;
     }
 }
-  
+
+  /**
+   * This method returns the text of a webElement
+   *
+   * @param element
+   *          - WebElement to retrieve text from.
+   */
+  public static String getText(WebElement element) {
+
+    return element.getText();
+  }
 
   /**
    * Retrieves the list of discrete names in a WebElement's class
