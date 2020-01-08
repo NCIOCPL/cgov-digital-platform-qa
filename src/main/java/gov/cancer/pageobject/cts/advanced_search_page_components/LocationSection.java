@@ -5,7 +5,7 @@ import gov.cancer.pageobject.components.Component;
 import gov.cancer.pageobject.components.RadioButton;
 import gov.cancer.pageobject.helper.Link;
 import org.openqa.selenium.WebElement;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 
 /**
  * This class represents location section on Advanced Search Page
@@ -59,19 +59,19 @@ public class LocationSection extends Component {
    * @return
    */
   public RadioButton getZipCodeRadioButton() {
-    throw new NotImplementedException();
+    throw new UnsupportedOperationException();
   }
 
   public RadioButton getCountryStateCityRadioButton() {
-    throw new NotImplementedException();
+    throw new UnsupportedOperationException();
   }
 
   public RadioButton getHospitalsRadioButton() {
-    throw new NotImplementedException();
+    throw new UnsupportedOperationException();
   }
 
   public RadioButton getAtNIHRadioButton() {
-    throw new NotImplementedException();
+    throw new UnsupportedOperationException();
   }
 
   /**
