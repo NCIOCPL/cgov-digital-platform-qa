@@ -26,8 +26,7 @@ public class BasicSearchPage extends CTSPage {
   // Submit button
   private Button searchButton;
 
-  // 'WHAT ARE CANCER CLINICAL TRIALS?' delighter
-  private Delighter whatAreClinicalTrials;
+
 
   /**
    * age_field and zip_field are elements representing the root html for age and zip fields accordingly - used
@@ -74,7 +73,7 @@ public class BasicSearchPage extends CTSPage {
   /**
    * getter method for AutoSuggestField CancerType
    */
-  public AutoSuggestField getSelectExactCancerType(String cancer_type) {
+  public AutoSuggestField getSelectExactCancerType() {
    return selectExactCancerType;
   }
 
