@@ -21,6 +21,8 @@ public class KeywordsPhrasesSection extends Component {
   private WebElement helptext;
   // help link
   private Link helpLink;
+  // text field element
+  private WebElement textField;
 
   private final static String KEYWORD_FIELD_LOCATOR= ":scope input#keywordPhrases";
   private final static String TITLE_LOCATOR =":scope legend >span" ;
@@ -71,6 +73,15 @@ public class KeywordsPhrasesSection extends Component {
    */
   public String getHelpText(){
     return helptext.getText();
+  }
+
+  /**
+   * Method returns place holder helper text
+   * @return
+   */
+  public String getPlaceHolderText () {
+    textField = ElementHelper.findElement(section, KEYWORD_FIELD_LOCATOR);
+    return textField.getAttribute("placeholder");
   }
 
 }

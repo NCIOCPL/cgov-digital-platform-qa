@@ -29,11 +29,11 @@ public class LocationSection extends Component {
   private Link helpLink;
 
   /************LOCATORS***************/
-  private final static String limitResultLocator = "";
-  private final static String zipCodeRadioButtonLocator = "";
-  private final static String countryStateCityRadioButtonLocator = "";
-  private final static String hospitalsRadioButtonLocator = "";
-  private final static String atNIHRadioButtonLocator = "";
+  private final static String limitResultLocator = "div.cts-toggle label";
+  private final static String zipCodeRadioButtonLocator = "div:nth-of-type(2) > .cts-radio__label";
+  private final static String countryStateCityRadioButtonLocator = "div:nth-of-type(3) > .cts-radio__label";
+  private final static String hospitalsRadioButtonLocator = "div:nth-of-type(4) > .cts-radio__label";
+  private final static String atNIHRadioButtonLocator = "div:nth-of-type(5) > .cts-radio__label";
   private final static String HELP_LINK_LOCATOR = ":scope legend a";
   private final static String TITLE_LOCATOR = ":scope legend span";
 
@@ -54,24 +54,34 @@ public class LocationSection extends Component {
   }
 
   /**
-   * Getters for radioButton objects
-   * TODO Add Locators and replace throw NotImplemented to return RadioButton
-   * @return
+   * Getter for Zip Code radioButton
    */
   public RadioButton getZipCodeRadioButton() {
-    throw new UnsupportedOperationException();
+    return zipCodeRadioButton;
   }
-
+  /**
+	 * Getters for Country State City radioBitton
+	 *
+	 * @return
+	 */
   public RadioButton getCountryStateCityRadioButton() {
-    throw new UnsupportedOperationException();
+	  return countryStateCityRadioButton;
   }
-
+  /**
+	 * Getters for Hospitals radioBitton
+	 *
+	 * @return
+	 */
   public RadioButton getHospitalsRadioButton() {
-    throw new UnsupportedOperationException();
+	  return hospitalsRadioButton;
   }
-
+  /**
+	 * Getters for At NIH radioBitton
+	 *
+	 * @return
+	 */
   public RadioButton getAtNIHRadioButton() {
-    throw new UnsupportedOperationException();
+	  return atNIHRadioButton;
   }
 
   /**

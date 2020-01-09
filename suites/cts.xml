@@ -6,6 +6,7 @@
     <classes>
       <class name="gov.cancer.tests.cts.CTS_BasicSearchFunctionality_Test" />
       <class name="gov.cancer.tests.cts.Search_Results_Test" />
+      <class name="gov.cancer.tests.cts.advanced_search_form.AgeSection_Test" />
     </classes>
   </test>
 
