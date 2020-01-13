@@ -19,7 +19,7 @@ public class ErrorDisplay extends Component {
    * @param scope - parent element
    */
   public ErrorDisplay(WebElement scope) {
-    super(ElementHelper.findElement(scope,ALERT_LOCATOR));
+    super(ElementHelper.findElement(scope, ALERT_LOCATOR));
     this.alert = ElementHelper.findElement(scope, ALERT_LOCATOR);
   }
 

@@ -13,6 +13,7 @@ public class Link {
 
   /**
    * Constructor
+   *
    * @param element The tag's WebElement.
    */
   public Link(WebElement element) {
@@ -23,7 +24,7 @@ public class Link {
    * Returns the href attribute as a URL object.
    *
    * @return A URL instance containing the parsed link from the elements href
-   *         attribute, or NULL if the href was missing, empty, or malformed.
+   * attribute, or NULL if the href was missing, empty, or malformed.
    */
   public URL getUrl() {
 
@@ -39,5 +40,12 @@ public class Link {
     }
 
     return theUrl;
+  }
+
+  /**
+   * Method clicks on the link
+   */
+  public void click() {
+    element.click();
   }
 }

@@ -85,10 +85,11 @@ public class CriteriaSection extends Component {
   public boolean isExpanded() {
     return Boolean.parseBoolean(criteriaSection.getAttribute("aria-expanded"));
   }
+
   /**
    * Returns number of entries in the criteria map
    */
-  public int getNumberOfEntriesInTheMap(){
+  public int getNumberOfEntriesInTheMap() {
 
     return buildCriteriaMap().keySet().size();
   }

@@ -3,6 +3,7 @@ package gov.cancer.pageobject.cts;
 import gov.cancer.framework.ElementHelper;
 import gov.cancer.pageobject.components.Button;
 import gov.cancer.pageobject.components.CheckBox;
+import gov.cancer.pageobject.components.Delighter;
 import gov.cancer.pageobject.components.Pager;
 import gov.cancer.pageobject.cts.components.CriteriaSection;
 import gov.cancer.pageobject.cts.components.ResultListSection;
@@ -48,6 +49,10 @@ public class SearchResultsPage extends CTSPage {
   private final static String PRINT_MODAL_LOCATOR = ".cts-modal";
   private final static String TRY_NEW_SEARCH_LINK_LOCATOR = "div.results-list a";
   private final static String NO_TRIALS_FOUND_HEADER_LOCATOR = "div.no-trials-found strong";
+  // search results page requires to use different delighters locators from other pages - see below, as well as
+  //overridden getters
+  private final static String HELP_DELIGHTER_LOCATOR = "div.results-page__content div[class='delighter cts-livehelp']";
+  private final static String TRIAL_CHECKLIST_DELIGHTER_LOCATOR = "div.results-page__content div[class='delighter cts-which']";
 
 
   /**
@@ -226,5 +231,23 @@ public class SearchResultsPage extends CTSPage {
    */
   public Link getNoResultsStartOver(){
     return new Link(ElementHelper.findElement(getBrowser(), "div.cts-results-header div> a"));
+  }
+
+  /**
+   * Overridden version of Get Help delighter getter (from CTS_Page) due to necessity to use different locator for Search Results page only
+   *    * @return
+   */
+  @Override
+  public Delighter getHelpDelighter (){
+    return new Delighter(ElementHelper.findElement(getBrowser(), HELP_DELIGHTER_LOCATOR));
+  }
+
+  /**
+   * Overridden version of Trial Checklist delighter getter(from CTSPage) due to necessity to use different locator for Search Results page only
+   * @return
+   */
+  @Override
+  public Delighter getTrialCheckListDelighter (){
+    return new Delighter(ElementHelper.findElement(getBrowser(), TRIAL_CHECKLIST_DELIGHTER_LOCATOR));
   }
 }

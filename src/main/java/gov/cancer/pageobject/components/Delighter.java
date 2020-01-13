@@ -28,7 +28,6 @@ public class Delighter extends Component {
   public Delighter (WebElement element) {
     super(element);
     delighter = element;
-    delighterLink = new Link(ElementHelper.findElement(delighter, DELIGHTER_LINK_LOCATOR));
 
   }
   /**
@@ -54,6 +53,7 @@ public class Delighter extends Component {
    * @return
    */
   public Link getLink (){
+    delighterLink = new Link(ElementHelper.findElement(delighter, DELIGHTER_LINK_LOCATOR));
     return delighterLink;
   }
 

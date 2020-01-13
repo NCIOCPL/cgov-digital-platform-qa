@@ -1,6 +1,7 @@
 package gov.cancer.pageobject.cts.components;
 
 import gov.cancer.framework.ElementHelper;
+import gov.cancer.pageobject.components.Button;
 import gov.cancer.pageobject.components.CheckBox;
 import gov.cancer.pageobject.components.Component;
 import gov.cancer.pageobject.helper.BlobOfText;
@@ -16,11 +17,10 @@ import java.util.TreeMap;
 public class ResultItem extends Component {
 
   //result item checkbox
-  private  CheckBox checkBox;
+  private CheckBox checkBox;
   // result item title link
   private Link titleLink;
-  // result item description text
-  private BlobOfText text;
+
 
   /**
    * Map of categories for each result item
@@ -30,7 +30,9 @@ public class ResultItem extends Component {
   private Map<String, String> categories = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
 
-  /**LOCATORS*/
+  /**
+   * LOCATORS
+   */
 
   private final static String CHECK_BOX_LOCATOR = ":scope .cts-checkbox";
   private final static String TITLE_LINK_LOCATOR = ":scope a";
@@ -43,27 +45,30 @@ public class ResultItem extends Component {
   /**
    * Constructor
    * Initializes all private objects
+   *
    * @param element
    */
-  public ResultItem (WebElement element){
+  public ResultItem(WebElement element) {
     super(element);
     checkBox = new CheckBox(ElementHelper.findElement(element, CHECK_BOX_LOCATOR));
     titleLink = new Link(ElementHelper.findElement(element, TITLE_LINK_LOCATOR));
     categories.put("Status", ElementHelper.findElement(element, STATUS_LOCATOR).getText());
-    categories.put( "Age", ElementHelper.findElement(element, AGE_LOCATOR).getText());
+    categories.put("Age", ElementHelper.findElement(element, AGE_LOCATOR).getText());
     categories.put("Gender", ElementHelper.findElement(element, GENDER_LOCATOR).getText());
-    categories.put("Location",ElementHelper.findElement(element, LOCATION_LOCATOR).getText());
+    categories.put("Location", ElementHelper.findElement(element, LOCATION_LOCATOR).getText());
 
     /**
      *Method returns checkbox object
      */
   }
+
   public CheckBox getCheckBox() {
     return checkBox;
   }
 
   /**
    * Method returns title link
+   *
    * @return
    */
   public Link getTitleLink() {
@@ -76,7 +81,8 @@ public class ResultItem extends Component {
    * @param category - Status, Age, Gender or Location
    * @return value of each category
    */
-  public String getCategory(String category){
+  public String getCategory(String category) {
     return categories.get(category);
   }
+
 }
