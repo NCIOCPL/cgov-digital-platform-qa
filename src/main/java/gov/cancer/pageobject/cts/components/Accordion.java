@@ -10,19 +10,16 @@ import java.util.List;
 
 
 /**
- * Class represents an entire accordion
+ * Class represents Accordion - it contains list of sections (Accordion Items)
  */
 public class Accordion extends Component {
 
-  //list of all title elements
-  List<WebElement> titles;
-  // list of all body elements
-  List<WebElement> bodies;
   //List of all accordion sections
-  List<AccordionItem> sections = new ArrayList<>();
+  private List<AccordionItem> sections = new ArrayList<>();
   //locators
   private final static String TITLE_LOCATOR = ":scope >h2";
   private final static String BODY_LOCATOR = ":scope >div";
+
 
 
   /**
@@ -33,8 +30,10 @@ public class Accordion extends Component {
 
   public Accordion(WebElement element) {
     super(element);
-    titles = ElementHelper.findElements(element, TITLE_LOCATOR);
-    bodies = ElementHelper.findElements(element, BODY_LOCATOR);
+    //list of all title elements
+    List<WebElement> titles = ElementHelper.findElements(element, TITLE_LOCATOR);
+    // list of all body elements
+    List<WebElement> bodies = ElementHelper.findElements(element, BODY_LOCATOR);
     sections.add(new Description(titles.get(0), bodies.get(0)));
     sections.add(new EligibilityCriteria(titles.get(1), bodies.get(1)));
     sections.add(new LocationAndContacts(titles.get(2), bodies.get(2)));
@@ -45,13 +44,24 @@ public class Accordion extends Component {
   }
 
   /**
-   * Getter method for individual AccordionItem
+   * Getter method for individual AccordionItem sections
    * Look up is based on an index of an item from a list
+   *
    * @param index
-   * @return corresponding to index section of an accordion
+   * @return corresponding to index SECTION of an accordion
    */
 
   public AccordionItem get(int index) {
     return sections.get(index);
+  }
+
+  /**
+   * Getter method for location and contacts accordion section
+   * Separated due to it's unique functionality
+   *
+   * @return LocationAndContacts object
+   */
+  public LocationAndContacts getLocationAccordion() {
+    return (LocationAndContacts) sections.get(2);
   }
 }

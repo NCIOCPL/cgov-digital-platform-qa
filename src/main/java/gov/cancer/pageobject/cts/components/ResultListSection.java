@@ -12,28 +12,30 @@ import java.util.List;
  */
 public class ResultListSection extends Component {
   // list of  results items objects
-  private List<ResultItem> resultItemList = new ArrayList<>();
+  private List<ResultItem> resultItemList = new ArrayList<ResultItem>();
 
   private static final String RESULT_ITEM_LOCATOR = "div[class$='list__item']";
 
   /**
    * Constructor
    * Initializes the list of results items
+   *
    * @param element
    */
-  public ResultListSection (WebElement element){
+  public ResultListSection(WebElement element) {
     super(element);
-    List <WebElement> resItemsWebElement = ElementHelper.findElements(element, RESULT_ITEM_LOCATOR);
-    for (WebElement we : resItemsWebElement){
+    List<WebElement> resItemsWebElement = ElementHelper.findElements(element, RESULT_ITEM_LOCATOR);
+    for (WebElement we : resItemsWebElement) {
       this.resultItemList.add(new ResultItem(we));
     }
   }
 
   /**
    * Getter for list of results items
+   *
    * @return
    */
-  public List <ResultItem> getAllResultsItems(){
+  public List<ResultItem> getAllResultsItems() {
     return resultItemList;
   }
 }

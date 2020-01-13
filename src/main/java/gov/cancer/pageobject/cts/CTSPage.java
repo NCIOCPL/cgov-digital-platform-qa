@@ -53,24 +53,6 @@ public class CTSPage extends PageObjectBase {
     super(path);
     this.rootElement = ElementHelper.findElement(getBrowser(), ROOT);
     header = ElementHelper.findElement(rootElement, HEADER);
-
-    // The HTML shows two delighter element for 'Get Help'  and 'Trial Checklist" delighters on a page,
-    // therefore we create a delighter object of an element that is displayed
-
-    List<WebElement> helpDelight = ElementHelper.findElements(getBrowser(), HELP_DELIGHTER_LOCATOR);
-    for (WebElement we : helpDelight) {
-      if (we.isDisplayed())
-        helpDelighter = new Delighter(we);
-      break;
-    }
-
-    List<WebElement> trialCheckListDelight = ElementHelper.findElements(getBrowser(), TRIAL_CHECK_LIST_DELIGHTER_LOCATOR);
-    for (WebElement we : trialCheckListDelight) {
-      if (we.isDisplayed())
-        trialCheckListDelighter = new Delighter(we);
-      break;
-    }
-
   }
 
 
@@ -122,6 +104,7 @@ public class CTSPage extends PageObjectBase {
    * @return
    */
   public Delighter getHelpDelighter() {
+    helpDelighter = new Delighter(ElementHelper.findElement(getBrowser(), HELP_DELIGHTER_LOCATOR));
     return helpDelighter;
   }
 
@@ -131,6 +114,7 @@ public class CTSPage extends PageObjectBase {
    * @return
    */
   public Delighter getTrialCheckListDelighter() {
+    trialCheckListDelighter = new Delighter(ElementHelper.findElement(getBrowser(),TRIAL_CHECK_LIST_DELIGHTER_LOCATOR));
     return trialCheckListDelighter;
   }
 
