@@ -86,4 +86,13 @@ public class SearchNavigationResult extends NavigationResult {
     return searchmsg.getText();
   }
 
+  /**
+   * Returns query param value for trial investigators
+   * @return
+   */
+  public String getTrialInvestigatorsParam (){
+    String trialInvestigatorsParam = "in";
+    return getPageURL().getQueryParam(trialInvestigatorsParam);
+  }
+
 }

@@ -13,17 +13,22 @@ import org.openqa.selenium.WebElement;
 public class InvestigatorsSection extends Component {
 
   //trial investigators field
+  private WebElement element;
   private AutoSuggestField investigators;
   // help link
   private Link helpLink;
   // Title Element
   private WebElement title;
+  // help text under trial investigators input field
+  private WebElement helptext;
+  // element represents AutoSuggest text field
+  private WebElement textField;
 
   //LOCATORS
   private static final String INVESTIGATORS_LOCATOR = ":scope #inv";
   private final static String HELP_LINK_LOCATOR = ":scope legend a";
   private final static String TITLE_LOCATOR = ":scope legend span";
-
+  private final static String HELP_TEXT_LOCATOR =":scope div >div>span";
 
   /**
    * Constructor
@@ -31,9 +36,12 @@ public class InvestigatorsSection extends Component {
    */
   public InvestigatorsSection (WebDriver driver, WebElement element){
     super(element);
-    investigators = new AutoSuggestField(driver, ElementHelper.findElement(element, INVESTIGATORS_LOCATOR));
+    this.element=element;
+    textField = ElementHelper.findElement(element, INVESTIGATORS_LOCATOR);
+    investigators = new AutoSuggestField(driver,textField);
     title = ElementHelper.findElement(element, TITLE_LOCATOR);
     helpLink = new Link(ElementHelper.findElement(element, HELP_LINK_LOCATOR));
+    helptext = ElementHelper.findElement(element, HELP_TEXT_LOCATOR);
 
   }
 
@@ -58,4 +66,25 @@ public class InvestigatorsSection extends Component {
     return helpLink;
   }
 
+  /**
+   * Getter for help text under the trial investigators textfield
+   * @return
+   */
+  public String getHelpText(){
+    return helptext.getText();
+  }
+
+  /**
+   * Getter for autocomplete help text under the trial investigators textfield
+   * @return
+   */
+  public String getAutoCompleteHelpText () {
+    return ElementHelper.getText(element,":scope div.menu-anchor");
+  }
+
+  /**
+   * Method returns place holder helper text
+   * @return
+   */
+  public String getPlaceHolderText () { return textField.getAttribute("placeholder"); }
 }
