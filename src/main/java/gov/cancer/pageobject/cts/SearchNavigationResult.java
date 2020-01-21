@@ -1,14 +1,19 @@
 package gov.cancer.pageobject.cts;
 
 
+import gov.cancer.framework.ElementHelper;
 import gov.cancer.pageobject.NavigationResult;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 /**
  * Class represents a page returned by Navigation event. Extending Navigation Result parent class
  */
 public class SearchNavigationResult extends NavigationResult {
+  // Search results message
+  private WebElement searchmsg;
 
+  private final static String SEARCH_RESULT_TITLE_LOCATOR = ".no-trials-found";
   /**
    * constructor retrieves current url and parses it
    *
@@ -18,6 +23,7 @@ public class SearchNavigationResult extends NavigationResult {
   public SearchNavigationResult(WebDriver driver) {
 
     super(driver);
+    searchmsg= ElementHelper.findElement(driver, SEARCH_RESULT_TITLE_LOCATOR);
   }
 
   /**
@@ -55,11 +61,29 @@ public class SearchNavigationResult extends NavigationResult {
   }
 
   /**
+   * Returns query param value for trial id keyword
+   * @return
+   */
+  public String getTrialIDParam (){
+    String trialIDParam = "tid";
+    return getPageURL().getQueryParam(trialIDParam);
+  }
+
+  /**
    * Retrieves number of all search results
    * @return
    */
   public int getResultListCount (){
     return 0;
+  }
+
+  /**
+   * Getter for No Search Results page message
+   *
+   * @return
+   */
+  public String getNoResultMsg() {
+    return searchmsg.getText();
   }
 
 }

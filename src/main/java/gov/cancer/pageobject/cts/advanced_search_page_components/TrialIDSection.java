@@ -10,33 +10,44 @@ import org.openqa.selenium.WebElement;
  * Class represents trial id section of Advanced Search page
  */
 public class TrialIDSection extends Component {
+  // Element represent entire section
+  private WebElement section;
   // trial id text field
   private TextField IDText;
-  //section title
+  // section title
   private WebElement title;
   // help link
   private Link helpLink;
+  // help text under trial id input field
+  private WebElement helptext;
 
-  /******Locators*****/
+
+  /****** Locators *****/
 
   private final static String idTextLocator = ":scope input#trialId";
   private final static String HELP_LINK_LOCATOR = ":scope legend a";
+  private final static String HELP_TEXT_LOCATOR = ":scope .cts-input__help-text";
   private final static String TITLE_LOCATOR = ":scope legend span";
+
 
   /**
    * Constructor
+   *
    * @param element
    *          - webelement of trial id section
    */
-  public TrialIDSection (WebElement element){
+  public TrialIDSection(WebElement element) {
     super(element);
-    IDText = new TextField(ElementHelper.findElement(element, idTextLocator));
-    helpLink = new Link(ElementHelper.findElement(element, HELP_LINK_LOCATOR));
-    title = ElementHelper.findElement(element, TITLE_LOCATOR);
+    section = element;
+    IDText = new TextField(ElementHelper.findElement(section, idTextLocator));
+    helpLink = new Link(ElementHelper.findElement(section, HELP_LINK_LOCATOR));
+    title = ElementHelper.findElement(section, TITLE_LOCATOR);
+    helptext = ElementHelper.findElement(section, HELP_TEXT_LOCATOR);
   }
 
   /**
    * Getter for trialId text field
+   *
    * @return
    */
   public TextField getTrialID() {
@@ -51,6 +62,15 @@ public class TrialIDSection extends Component {
   }
 
   /**
+   * Getter for help text under the Trial ID text field
+   *
+   * @return
+   */
+  public String getHelpText() {
+    return helptext.getText();
+  }
+
+  /**
    * Getter for Help Link
    *
    * @return
@@ -58,4 +78,5 @@ public class TrialIDSection extends Component {
   public Link getHelpLink() {
     return helpLink;
   }
+
 }
