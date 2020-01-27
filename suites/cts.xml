@@ -11,6 +11,7 @@
       <class name="gov.cancer.tests.cts.advanced_search_form.TrialIDSection_Test"/>
       <class name="gov.cancer.tests.cts.TrialDetails_Test" />
       <class name="gov.cancer.tests.cts.advanced_search_form.TrialInvestigators_Test"/>
+      <class name="gov.cancer.tests.cts.advanced_search_form.LeadOrganization_Test" />
     </classes>
   </test>
 

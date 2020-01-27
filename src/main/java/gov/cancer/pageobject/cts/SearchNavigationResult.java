@@ -70,6 +70,24 @@ public class SearchNavigationResult extends NavigationResult {
   }
 
   /**
+   * Returns query param value for trial investigators
+   * @return
+   */
+  public String getTrialInvestigatorsParam (){
+    String trialInvestigatorsParam = "in";
+    return getPageURL().getQueryParam(trialInvestigatorsParam);
+  }
+
+  /**
+   * Returns query param value for lead organization
+   * @return
+   */
+  public String getLeadorganizationParam (){
+    String leadOrganizationParam = "lo";
+    return getPageURL().getQueryParam(leadOrganizationParam);
+  }
+
+  /**
    * Retrieves number of all search results
    * @return
    */
@@ -85,14 +103,4 @@ public class SearchNavigationResult extends NavigationResult {
   public String getNoResultMsg() {
     return searchmsg.getText();
   }
-
-  /**
-   * Returns query param value for trial investigators
-   * @return
-   */
-  public String getTrialInvestigatorsParam (){
-    String trialInvestigatorsParam = "in";
-    return getPageURL().getQueryParam(trialInvestigatorsParam);
-  }
-
 }
