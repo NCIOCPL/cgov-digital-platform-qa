@@ -36,4 +36,12 @@ public class TextField extends CGovField {
       this.formField.sendKeys(Keys.ENTER);
   }
 
+  /**
+   * Retrieves the placeholder text of the field
+   * @return
+   */
+  public String getPlaceholderText(){
+    return formField.getAttribute("placeholder");
+  }
+
 }

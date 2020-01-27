@@ -2,6 +2,7 @@ package gov.cancer.pageobject.cts;
 
 import gov.cancer.framework.ElementHelper;
 import gov.cancer.pageobject.components.*;
+import gov.cancer.pageobject.cts.advanced_search_page_components.AgeSection;
 import gov.cancer.pageobject.cts.components.ErrorDisplay;
 import org.openqa.selenium.WebElement;
 
@@ -25,8 +26,6 @@ public class BasicSearchPage extends CTSPage {
   private TextField keyword;
   // Submit button
   private Button searchButton;
-
-
 
   /**
    * age_field and zip_field are elements representing the root html for age and zip fields accordingly - used
@@ -59,7 +58,6 @@ public class BasicSearchPage extends CTSPage {
   public BasicSearchPage(String path) {
     super(path);
     cancerTypeKeyword = ElementHelper.findElement(getBrowser(), CANCER_TYPE_KEYWORD_TEXT_BOX);
-
     age = new TextField(ElementHelper.findElement(getBrowser(), AGE_TEXT_BOX));
     zip = new TextField(ElementHelper.findElement(getBrowser(), ZIP_TEXT_BOX));
     keyword = new TextField(cancerTypeKeyword);
@@ -68,10 +66,10 @@ public class BasicSearchPage extends CTSPage {
     //parent html of fields
     age_field = ElementHelper.findElement(getBrowser(), AGE_FIELD);
     zip_field = ElementHelper.findElement(getBrowser(), ZIP_FIELD);
-  }
+      }
 
   /**
-   * getter method for AutoSuggestField CancerType
+   * Getter method for AutoSuggestField CancerType
    */
   public AutoSuggestField getSelectExactCancerType() {
    return selectExactCancerType;
@@ -98,6 +96,14 @@ public class BasicSearchPage extends CTSPage {
   }
 
   /**
+  * Getter for No available options message on Cancer Type/Condition field
+  */
+  public String getCancerTypeKeywordErrorMessage() {
+
+    return ElementHelper.getText( getBrowser(),".cts-autocomplete__menu-item") ;
+ }
+
+  /**
    * Method returns cancer type text field
    */
   public TextField getKeyword() {
@@ -117,11 +123,11 @@ public class BasicSearchPage extends CTSPage {
   public TextField getZip() {
     return zip;
   }
-
+  /**
+   * Method returns Find trials button
+   */
  public Button getSearchButton(){
     return searchButton;
  }
-
-
 
 }

@@ -28,8 +28,8 @@ public class CTS_BasicSearchFunctionality_Test extends TestObjectBase {
    * @param CancerType value for Cancer Type
    * @param Results    The url parameters
    */
-  @Test(dataProvider = "getBasicSearchCTK")
-  public void verifyBasicSearchCTK(String path, String CancerType, String Results) {
+  @Test(dataProvider = "getBasicSearchCancerTypeKeyword")
+  public void verifyBasicSearchCancerTypeKeyword(String path, String CancerType, String Results) {
 
     TestRunner.run(BasicSearchPage.class, path, (BasicSearchPage page) -> {
       page.getSelectExactCancerType().selectItem(CancerType);
@@ -38,6 +38,25 @@ public class CTS_BasicSearchFunctionality_Test extends TestObjectBase {
       //assert that url contains expected query params
       Assert.assertEquals(res.getCancerTypeParam(), Results, "query param doesnt match for cancer type");
 
+    });
+
+  }
+
+  /**
+   * When user inputs keyword in the Cancer Type field and no matching results are found, correct message "No available options found.  Your search will be based on the text above." is displayed.
+   * Assertion is performed by verifying the message
+   *
+   * @param path       url
+   * @param CancerType value for Cancer Type
+   * @param Message    The message for no available options
+   */
+  @Test(dataProvider = "getBasicSearchCancerTypeKeywordAuto")
+  public void verifyBasicSearchCancerTypeKeywordAutoSuggest(String path, String CancerType, String Message) {
+
+    TestRunner.run(BasicSearchPage.class, path, (BasicSearchPage page) -> {
+      page.getKeyword().enterText(CancerType);
+      //assert that message displayed is correct
+      Assert.assertEquals(page.getCancerTypeKeywordErrorMessage(), Message, "Correct message is not displayed for No available options");
     });
 
   }
@@ -89,16 +108,16 @@ public class CTS_BasicSearchFunctionality_Test extends TestObjectBase {
    * @param path    url
    * @param Zip     zip code value
    * @param Results url params
-   * @param CTK     cancer type keyword
-   * @param Results url params for CTK
+   * @param CancerTypeKeyword     cancer type keyword
+   * @param Results url params for CancerTypeKeyword
    */
-  @Test(dataProvider = "getBasicSearchCTKAgeZip")
-  public void verifyBasicSearchCTKAgeZipCode(String path, String CTK, String Zip, String Age, String Results) {
+  @Test(dataProvider = "getBasicSearchCancerTypeKeywordAgeZip")
+  public void verifyBasicSearchCancerTypeKeywordAgeZipCode(String path, String CancerTypeKeyword, String Zip, String Age, String Results) {
 
     TestRunner.run(BasicSearchPage.class, path, (BasicSearchPage page) -> {
       page.getZip().enterText(Zip);
       page.getAge().enterText(Age);
-      page.getSelectExactCancerType().selectItem(CTK);
+      page.getSelectExactCancerType().selectItem(CancerTypeKeyword);
       // create a navigation event redirect to search results page
       SearchNavigationResult res = page.clickSubmit(page.getSearchButton());
       //assert that url contains expected query params
@@ -115,10 +134,10 @@ public class CTS_BasicSearchFunctionality_Test extends TestObjectBase {
    * @param path       url
    * @param CancerType Cancer Type keyword
    * @param Zip        zipcode
-   * @param Results    zipcode and CTK url params
+   * @param Results    zipcode and CancerTypeKeyword url params
    */
-  @Test(dataProvider = "getBasicSearchCTKZip")
-  public void verifyBasicSearchCTKZipCode(String path, String CancerType, String Zip, String Results) {
+  @Test(dataProvider = "getBasicSearchCancerTypeKeywordZip")
+  public void verifyBasicSearchCancerTypeKeywordZipCode(String path, String CancerType, String Zip, String Results) {
 
     TestRunner.run(BasicSearchPage.class, path, (BasicSearchPage page) -> {
       page.getZip().enterText(Zip);
@@ -139,10 +158,10 @@ public class CTS_BasicSearchFunctionality_Test extends TestObjectBase {
    * @param path       url
    * @param CancerType Cancer Type Keyword
    * @param Age        age value
-   * @param ResultsCTK Cancer Type url param
+   * @param ResultsCancerTypeKeyword Cancer Type url param
    */
-  @Test(dataProvider = "getBasicSearchCTKAge")
-  public void verifyBasicSearchCTKAge(String path, String CancerType, String Age, String ResultsCTK) {
+  @Test(dataProvider = "getBasicSearchCancerTypeKeywordAge")
+  public void verifyBasicSearchCancerTypeKeywordAge(String path, String CancerType, String Age, String ResultsCancerTypeKeyword) {
 
     TestRunner.run(BasicSearchPage.class, path, (BasicSearchPage page) -> {
 
@@ -151,7 +170,7 @@ public class CTS_BasicSearchFunctionality_Test extends TestObjectBase {
       // create a navigation event redirect to search results page
       SearchNavigationResult res = page.clickSubmit(page.getSearchButton());
       //assert that url contains expected query params
-      Assert.assertEquals(res.getCancerTypeParam(), ResultsCTK, "query param doesnt match for cancer type");
+      Assert.assertEquals(res.getCancerTypeParam(), ResultsCancerTypeKeyword, "query param doesnt match for cancer type");
       Assert.assertEquals(res.getAgeParam(), Age, "query param doesnt match for age");
     });
   }
@@ -249,7 +268,7 @@ public class CTS_BasicSearchFunctionality_Test extends TestObjectBase {
 
   /************************SUBMIT SEARCH WITH HITTING ENTER KEY***********************/
 
-  @Test(dataProvider = "getBasicSearchCancerTypeKeyword")
+  @Test(dataProvider = "getBasicCancerTypeKeyword")
   public void verifyBasicSearchCancerKeyWordWithEnter(String path, String Keyword) {
 
     TestRunner.run(BasicSearchPage.class, path, (BasicSearchPage page) -> {
@@ -293,6 +312,20 @@ public class CTS_BasicSearchFunctionality_Test extends TestObjectBase {
       //assert that url contains expected query params
       Assert.assertEquals(res.getZipParam(), Zip, "query param doesnt match for zipcode");
 
+    });
+  }
+
+  /**
+   * Verify the CancerTypeKeyword Section Placeholder Text
+   * parameters
+   *
+   * @param path                    url
+   * @param ExpectedPlaceholderText placeholder text
+   */
+  @Test(dataProvider = "getCancerTypeKeywordPlaceholderText")
+  public void verifyCancerTypeKeywordSectionPlaceholderText(String path, String ExpectedPlaceholderText) {
+    TestRunner.run(BasicSearchPage.class, path, (BasicSearchPage page) -> {
+      Assert.assertEquals(page.getKeyword().getPlaceholderText(), ExpectedPlaceholderText, "CancerType Keywords Section placeholder text does not match");
     });
   }
 
@@ -359,15 +392,43 @@ public class CTS_BasicSearchFunctionality_Test extends TestObjectBase {
     });
   }
 
+  /************************************************************
+   * Data providers
+   ************************************************************/
+
   /**
    * Data provider retrieves paths to Basic Search page, Cancer Type Keyword and url params
    *
    * @return
    */
-  @DataProvider(name = "getBasicSearchCTK")
-  public Iterator<Object[]> getBasicSearchCTK() {
+  @DataProvider(name = "getBasicSearchCancerTypeKeyword")
+  public Iterator<Object[]> getBasicSearchCancerTypeKeyword() {
     String[] columns = {"path", "CancerType", "ResultsCTK"};
     return new ExcelDataReader(getDataFilePath("cts_basic_search_functionality-data.xlsx"), "basic_search", columns);
+  }
+
+  /**
+   * Data provider retrieves paths to Basic Search page, Cancer Type Keyword and message
+   *
+   * @return
+   */
+  @DataProvider(name = "getBasicSearchCancerTypeKeywordAuto")
+  public Iterator<Object[]> getBasicSearchCancerTypeKeywordAuto() {
+    String[] columns = {"path", "CancerType", "Message"};
+    return new ExcelDataReader(getDataFilePath("cts_basic_search_functionality-data.xlsx"), "basic_search_negative", columns);
+  }
+
+  /**
+   * Data provider retrieves paths to Basic Search page and the Placeholder Text for the CancerTypeKeyword Section
+   *
+   * @return
+   */
+
+  @DataProvider(name = "getCancerTypeKeywordPlaceholderText")
+  public Iterator<Object[]> getCancerTypeKeywordPlaceholderText() {
+    String[] columns = {"path", "ExpectedPlaceholderText"};
+    return new ExcelDataReader(getDataFilePath("cts_basic_search_functionality-data.xlsx"), "basic_search", columns);
+
   }
 
   /**
@@ -397,8 +458,8 @@ public class CTS_BasicSearchFunctionality_Test extends TestObjectBase {
    *
    * @return
    */
-  @DataProvider(name = "getBasicSearchCTKAgeZip")
-  public Iterator<Object[]> getBasicSearchCTKAgeZip() {
+  @DataProvider(name = "getBasicSearchCancerTypeKeywordAgeZip")
+  public Iterator<Object[]> getBasicSearchCancerTypeKeywordAgeZip() {
     String[] columns = {"path", "CancerType", "Zip", "Age", "ResultsCTK"};
     return new ExcelDataReader(getDataFilePath("cts_basic_search_functionality-data.xlsx"), "basic_search", columns);
   }
@@ -408,8 +469,8 @@ public class CTS_BasicSearchFunctionality_Test extends TestObjectBase {
    *
    * @return
    */
-  @DataProvider(name = "getBasicSearchCTKZip")
-  public Iterator<Object[]> getBasicSearchCTKZip() {
+  @DataProvider(name = "getBasicSearchCancerTypeKeywordZip")
+  public Iterator<Object[]> getBasicSearchCancerTypeKeywordZip() {
     String[] columns = {"path", "CancerType", "Zip", "ResultsCTK"};
     return new ExcelDataReader(getDataFilePath("cts_basic_search_functionality-data.xlsx"), "basic_search", columns);
   }
@@ -419,8 +480,8 @@ public class CTS_BasicSearchFunctionality_Test extends TestObjectBase {
    *
    * @return
    */
-  @DataProvider(name = "getBasicSearchCTKAge")
-  public Iterator<Object[]> getBasicSearchCTKAge() {
+  @DataProvider(name = "getBasicSearchCancerTypeKeywordAge")
+  public Iterator<Object[]> getBasicSearchCancerTypeKeywordAge() {
     String[] columns = {"path", "CancerType", "Age", "ResultsCTK"};
     return new ExcelDataReader(getDataFilePath("cts_basic_search_functionality-data.xlsx"), "basic_search", columns);
   }
@@ -473,8 +534,8 @@ public class CTS_BasicSearchFunctionality_Test extends TestObjectBase {
    *
    * @return
    */
-  @DataProvider(name = "getBasicSearchCancerTypeKeyword")
-  public Iterator<Object[]> getBasicSearchCancerTypeKeyword() {
+  @DataProvider(name = "getBasicCancerTypeKeyword")
+  public Iterator<Object[]> getBasicCancerTypeKeyword() {
     String[] columns = {"path", "CancerKeyWords"};
     List<Object[]> converted = new ArrayList<Object[]>();
     Iterator<Object[]> values = new ExcelDataReader(getDataFilePath("cts_basic_search_functionality-data.xlsx"), "basic_search", columns);
@@ -487,7 +548,9 @@ public class CTS_BasicSearchFunctionality_Test extends TestObjectBase {
     return converted.iterator();
   }
 
-  /** Data Providers for delighters - each return path to Basic Search Form page, title and link for different delighter  */
+  /**
+   * Data Providers for delighters - each return path to Basic Search Form page, title and link for different delighter
+   */
 
   @DataProvider(name = "getHelpDelighter")
   public Iterator<Object[]> getHelpDelighter() {
