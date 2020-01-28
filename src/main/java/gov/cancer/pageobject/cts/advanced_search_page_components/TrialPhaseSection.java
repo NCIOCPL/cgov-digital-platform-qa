@@ -1,9 +1,11 @@
 package gov.cancer.pageobject.cts.advanced_search_page_components;
 
 import gov.cancer.framework.ElementHelper;
+import gov.cancer.framework.ScrollUtil;
 import gov.cancer.pageobject.components.CheckBox;
 import gov.cancer.pageobject.components.Component;
 import gov.cancer.pageobject.helper.Link;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
@@ -21,6 +23,10 @@ public class TrialPhaseSection extends Component {
   private WebElement title;
   // help link
   private Link helpLink;
+  //webdriver is added to support scroll method (see below)
+  private WebDriver driver;
+  //private list of webelements is used for scroll method (to access the last checkbox and scroll to it)
+  private List<WebElement> otherCheckBoxes;
 
   /******Locators*****/
 
@@ -37,10 +43,11 @@ public class TrialPhaseSection extends Component {
    *
    * @param element
    */
-  public TrialPhaseSection(WebElement element) {
+  public TrialPhaseSection(WebDriver driver,WebElement element) {
     super(element);
+    this.driver = driver;
     allCheckBox = new CheckBox(ElementHelper.findElement(element, allCheckBoxLocator));
-    List<WebElement> otherCheckBoxes = ElementHelper.findElements(element, phaseCheckboxLocator);
+    otherCheckBoxes = ElementHelper.findElements(element, phaseCheckboxLocator);
     for (WebElement we : otherCheckBoxes) {
       phasesCheckBoxes.add(new CheckBox(we));
     }
@@ -78,5 +85,13 @@ public class TrialPhaseSection extends Component {
    */
   public Link getHelpLink() {
     return helpLink;
+  }
+
+  /**
+   *This method is scrolling until the last checkbox is visible
+   * It is necessary, because of the presence of 'sticky block (form action)' which receives the click, instead of the checkbox
+   */
+  public void scrollUntilCheckBoxVisible(){
+    ScrollUtil.scrollIntoview(driver, otherCheckBoxes.get(otherCheckBoxes.size()-1));
   }
 }

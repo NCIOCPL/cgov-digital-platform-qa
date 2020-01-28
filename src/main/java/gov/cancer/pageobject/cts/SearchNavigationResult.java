@@ -88,6 +88,15 @@ public class SearchNavigationResult extends NavigationResult {
   }
 
   /**
+    * Returns query param value for trial phase
+ * @return
+   */
+  public String getTrialPhaseParam (){
+    String trialPhaseParam = "tp";
+    return getPageURL().getQueryParam(trialPhaseParam);
+  }
+
+  /**
    * Retrieves number of all search results
    * @return
    */

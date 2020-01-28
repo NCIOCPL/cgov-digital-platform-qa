@@ -58,7 +58,7 @@ private final static String FORM_ACTION_LOCATOR = "#stickyAnchor";
     locationSection = new LocationSection(getBrowser(),ElementHelper.findElement(getBrowser(), LOCATION_SECTION_LOCATOR));
     trialTypeSection = new TrialTypeSection(ElementHelper.findElement(getBrowser(), TRIAL_TYPE_LOCATOR));
     drugTreatmentSection = new DrugTreatmentSection(getBrowser(), ElementHelper.findElement(getBrowser(), DRUG_SECTION_LOCATOR));
-    trialPhaseSection = new TrialPhaseSection(ElementHelper.findElement(getBrowser(), TRIAL_PHASE_LOCATOR));
+    trialPhaseSection = new TrialPhaseSection(getBrowser(),ElementHelper.findElement(getBrowser(), TRIAL_PHASE_LOCATOR));
     trialID = new TrialIDSection(ElementHelper.findElement(getBrowser(), TRIAL_ID_LOCATOR));
     trialInvestigator = new InvestigatorsSection(getBrowser(), ElementHelper.findElement(getBrowser(), TRIAL_INVESTIGATOR_LOCATOR));
     leadOrganizationSection = new LeadOrganizationSection(getBrowser(), ElementHelper.findElement(getBrowser(), LEAD_ORGANIZATION_LOCATOR));
@@ -125,4 +125,5 @@ private final static String FORM_ACTION_LOCATOR = "#stickyAnchor";
   public FormAction getFormAction() {
     return formAction;
   }
+
 }
