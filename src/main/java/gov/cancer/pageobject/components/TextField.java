@@ -9,13 +9,14 @@ import org.openqa.selenium.WebElement;
 public class TextField extends CGovField {
 
   //represent any text field on the form
-  private  WebElement formField;
+  private WebElement formField;
 
   /**
    * main constructor
+   *
    * @param element
    */
-  public TextField (WebElement element){
+  public TextField(WebElement element) {
 
     super(element);
     this.formField = element;
@@ -23,9 +24,10 @@ public class TextField extends CGovField {
 
   /**
    * Method is used to send any text to form
+   *
    * @param text
    */
-  public void enterText (String text){
+  public void enterText(String text) {
     this.formField.sendKeys(text);
   }
 
@@ -33,7 +35,14 @@ public class TextField extends CGovField {
    * Method is used to hit ENTER key to trigger navigation event
    */
   public void hitEnter() {
-      this.formField.sendKeys(Keys.ENTER);
+    this.formField.sendKeys(Keys.ENTER);
+  }
+
+  /**
+   * Method is used to get the populated Text of the textfield
+   */
+  public String getText() {
+    return this.formField.getText();
   }
 
   /**

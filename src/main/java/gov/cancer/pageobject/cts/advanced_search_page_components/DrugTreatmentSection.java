@@ -1,8 +1,8 @@
 package gov.cancer.pageobject.cts.advanced_search_page_components;
 
 import gov.cancer.framework.ElementHelper;
-import gov.cancer.pageobject.components.AutoSuggestField;
 import gov.cancer.pageobject.components.Component;
+import gov.cancer.pageobject.cts.components.AutoSuggest;
 import gov.cancer.pageobject.helper.Link;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,23 +12,19 @@ import org.openqa.selenium.WebElement;
  */
 public class DrugTreatmentSection extends Component {
   // Drug/Treatment field
-  private AutoSuggestField drug;
+  private AutoSuggest drug;
   // Other Treatments field
-  private AutoSuggestField treatment;
+  private AutoSuggest treatment;
   // help link
   private Link helpLink;
   // Title Element
   private WebElement title;
 
   // LOCATORS :
-  private final static String DRUG_LOCATOR = ":scope #dt";
-  private final static String TREATMENT_LOCATOR = ":scope #ti";
+  private final static String DRUG_LOCATOR = "#dt-autocomplete-wrapper";
+  private final static String TREATMENT_LOCATOR = "#ti-autocomplete-wrapper";
   private final static String HELP_LINK_LOCATOR = ":scope legend a";
   private final static String TITLE_LOCATOR = ":scope legend span";
-
-  // Entire section element
-  private WebElement section;
-  // WebDriver to initialize Autosuggest Objects
 
 
   /**
@@ -36,11 +32,10 @@ public class DrugTreatmentSection extends Component {
    */
   public DrugTreatmentSection(WebDriver driver, WebElement element) {
     super(element);
-    drug = new AutoSuggestField(driver, ElementHelper.findElement(element, DRUG_LOCATOR));
-    treatment = new AutoSuggestField(driver, ElementHelper.findElement(element, TREATMENT_LOCATOR));
+    drug = new AutoSuggest(driver, ElementHelper.findElement(element, DRUG_LOCATOR));
+    treatment = new AutoSuggest(driver, ElementHelper.findElement(element, TREATMENT_LOCATOR));
     helpLink = new Link(ElementHelper.findElement(element, HELP_LINK_LOCATOR));
     title = ElementHelper.findElement(element, TITLE_LOCATOR);
-
   }
 
   /**
@@ -48,16 +43,16 @@ public class DrugTreatmentSection extends Component {
    *
    * @return autosuggest object
    */
-  public AutoSuggestField getDrug() {
+  public AutoSuggest getDrugAutoSuggest() {
     return drug;
   }
 
   /**
-   * Getter methos for Other Treatment Autosuggest object
+   * Getter method for Other Treatment Autosuggest object
    *
    * @return
    */
-  public AutoSuggestField getTreatment() {
+  public AutoSuggest getTreatmentAutoSuggest() {
     return treatment;
   }
 
@@ -73,4 +68,6 @@ public class DrugTreatmentSection extends Component {
   public String getTitle(){
     return title.getText();
   }
+
 }
+

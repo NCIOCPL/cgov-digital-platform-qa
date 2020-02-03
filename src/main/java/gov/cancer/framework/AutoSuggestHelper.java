@@ -1,5 +1,4 @@
 package gov.cancer.framework;
-import gov.cancer.pageobject.components.TextField;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -19,6 +18,7 @@ public class AutoSuggestHelper {
   // Wait object
   private WebDriverWait wait;
   private WebElement parentElement;
+
   /**
    * Constructor.
    *
@@ -28,7 +28,7 @@ public class AutoSuggestHelper {
     this.browser = browser;
     wait = new WebDriverWait(this.browser, AUTO_SUGGEST_TIMEOUT);
     this.parentElement = element;
-  }
+      }
   /**
    * Selects an item from an autosuggest list, using the *exact* text of the
    * desired entry. (e.g. search for "Adenosquamous Lung Cancer", not "Lung
@@ -43,4 +43,5 @@ public class AutoSuggestHelper {
     parentElement.sendKeys(Keys.ARROW_DOWN);
     parentElement.sendKeys(Keys.ENTER);
   }
+
 }

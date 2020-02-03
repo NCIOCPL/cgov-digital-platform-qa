@@ -33,17 +33,17 @@ public class AdvancedSearchPage extends CTSPage {
 
 
   /********LOCATORS************/
- private final static String CANCER_TYPE_SECTION_LOCATOR = "#fieldset--type";
- private final static String AGE_SECTION_LOCATOR ="#fieldset--age";
- private final static String KEYWORDS_PHRASES_LOCATOR="#fieldset--keyword";
- private final static String LOCATION_SECTION_LOCATOR = "#fieldset--location";
- private final static String TRIAL_TYPE_LOCATOR= "#fieldset--trialtype";
- private final static String DRUG_SECTION_LOCATOR ="#fieldset--drug-trtmt" ;
- private final static String TRIAL_PHASE_LOCATOR ="#fieldset--trialphase" ;
- private final static String TRIAL_ID_LOCATOR = "#fieldset--trialid";
- private final static String TRIAL_INVESTIGATOR_LOCATOR = "#fieldset--trialInvestigators";
- private final static String LEAD_ORGANIZATION_LOCATOR = "#fieldset--lead_organization";
-private final static String FORM_ACTION_LOCATOR = "#stickyAnchor";
+  private final static String CANCER_TYPE_SECTION_LOCATOR = "#fieldset--type";
+  private final static String AGE_SECTION_LOCATOR = "#fieldset--age";
+  private final static String KEYWORDS_PHRASES_LOCATOR = "#fieldset--keyword";
+  private final static String LOCATION_SECTION_LOCATOR = "#fieldset--location";
+  private final static String TRIAL_TYPE_LOCATOR = "#fieldset--trialtype";
+  private final static String DRUG_SECTION_LOCATOR = "#fieldset--drug-trtmt";
+  private final static String TRIAL_PHASE_LOCATOR = "#fieldset--trialphase";
+  private final static String TRIAL_ID_LOCATOR = "#fieldset--trialid";
+  private final static String TRIAL_INVESTIGATOR_LOCATOR = "#fieldset--trialInvestigators";
+  private final static String LEAD_ORGANIZATION_LOCATOR = "#fieldset--lead_organization";
+  private final static String FORM_ACTION_LOCATOR = "#stickyAnchor";
 
   /**
    * Constructor
@@ -52,18 +52,25 @@ private final static String FORM_ACTION_LOCATOR = "#stickyAnchor";
    */
   public AdvancedSearchPage(String path) {
     super(path);
-    cancerTypeSection = new CancerTypeSection(getBrowser(), ElementHelper.findElement(getBrowser(),CANCER_TYPE_SECTION_LOCATOR));
+    doPageInitialization();
+  }
+
+  /**
+   * This method initialize all the form elements
+   */
+
+  public void doPageInitialization() {
+    cancerTypeSection = new CancerTypeSection(getBrowser(), ElementHelper.findElement(getBrowser(), CANCER_TYPE_SECTION_LOCATOR));
     ageSection = new AgeSection(ElementHelper.findElement(getBrowser(), AGE_SECTION_LOCATOR));
     keywordsPhrasesSection = new KeywordsPhrasesSection(ElementHelper.findElement(getBrowser(), KEYWORDS_PHRASES_LOCATOR));
-    locationSection = new LocationSection(getBrowser(),ElementHelper.findElement(getBrowser(), LOCATION_SECTION_LOCATOR));
+    locationSection = new LocationSection(getBrowser(), ElementHelper.findElement(getBrowser(), LOCATION_SECTION_LOCATOR));
     trialTypeSection = new TrialTypeSection(getBrowser(),ElementHelper.findElement(getBrowser(), TRIAL_TYPE_LOCATOR));
-    drugTreatmentSection = new DrugTreatmentSection(getBrowser(), ElementHelper.findElement(getBrowser(), DRUG_SECTION_LOCATOR));
-    trialPhaseSection = new TrialPhaseSection(getBrowser(),ElementHelper.findElement(getBrowser(), TRIAL_PHASE_LOCATOR));
+    trialPhaseSection = new TrialPhaseSection(getBrowser(), ElementHelper.findElement(getBrowser(), TRIAL_PHASE_LOCATOR));
     trialID = new TrialIDSection(ElementHelper.findElement(getBrowser(), TRIAL_ID_LOCATOR));
     trialInvestigator = new InvestigatorsSection(getBrowser(), ElementHelper.findElement(getBrowser(), TRIAL_INVESTIGATOR_LOCATOR));
     leadOrganizationSection = new LeadOrganizationSection(getBrowser(), ElementHelper.findElement(getBrowser(), LEAD_ORGANIZATION_LOCATOR));
     formAction = new FormAction(ElementHelper.findElement(getBrowser(), FORM_ACTION_LOCATOR));
-
+    drugTreatmentSection = new DrugTreatmentSection(getBrowser(), ElementHelper.findElement(getBrowser(), DRUG_SECTION_LOCATOR));
   }
 
   //Getter for age field
@@ -121,9 +128,9 @@ private final static String FORM_ACTION_LOCATOR = "#stickyAnchor";
     return locationSection;
   }
 
+
   //Getter for section of the page with 'Find Trials' and 'Clear Form' buttons
   public FormAction getFormAction() {
     return formAction;
   }
-
 }

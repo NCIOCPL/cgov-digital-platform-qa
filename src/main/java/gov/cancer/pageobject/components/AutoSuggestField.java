@@ -4,6 +4,7 @@ import gov.cancer.framework.AutoSuggestHelper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+
 /**
  * This class represents any autosuggest field on a page
  */
@@ -30,6 +31,5 @@ public class AutoSuggestField extends TextField {
   public void selectItem (String text){
   autoSuggestHelper.SelectExact(text);
   }
-
 
 }
