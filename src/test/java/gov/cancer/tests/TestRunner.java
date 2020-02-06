@@ -2,6 +2,7 @@ package gov.cancer.tests;
 
 import java.lang.reflect.InvocationTargetException;
 
+import gov.cancer.pageobject.crosscutting.HttpProtocolPage;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 
@@ -199,5 +200,52 @@ public class TestRunner<T extends PageObjectBase> {
     }
 
   }
+
+
+  /**
+   * Static method for encapsulating the the logic of instantiating a page object
+   * This method is used as a part of API testing with restAssured library
+   * It does not use PageObject since HTTP ProtocolPage is not using Selenium capabilities
+   *
+   * @param classImplementation
+   *          A Class object. Typically passed along the lines of
+   *          {@code}HttpProtocolPage.class{@code}
+   * @param path
+   *          The path of the URL to be tested. (e.g. /types/lung)
+   * @param callback
+   *          Callback method containing the tests to be executed.
+   */
+  public static <T extends HttpProtocolPage> void runRequestSender(Class<T> classImplementation, String path,
+                                                                   ITestAction<T> callback) {
+    runImplementationRequest(classImplementation, path, callback );
+  }
+
+
+  private static <T extends HttpProtocolPage> void runImplementationRequest(Class<T> classImplementation,
+                                                                            String path, ITestAction<T> callback) {
+    try {
+      /**
+       * Find the constructor of the passed class which takes a String, and then
+       * create a new instance, using the path parameter.
+       *
+       * Based on https://stackoverflow.com/a/300013/282194
+       */
+      T page = classImplementation.getConstructor(String.class).newInstance(path);
+
+      callback.test(page);
+
+      /**
+       * Technically, the calls to getConstructor() and newInstance() are capable of
+       * throwing various exceptions. In reality, because T is constrained to be a
+       * subclass of HttpProtocolPage, we know that the constructor exists. Because of
+       * this, these specific exceptions may be safely swallowed.
+       */
+    } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+      | NoSuchMethodException | SecurityException e) {
+      e.printStackTrace();
+    }
+
+  }
+
 
 }
