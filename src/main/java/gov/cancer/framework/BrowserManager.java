@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
@@ -120,7 +121,7 @@ public class BrowserManager {
    * @return WebDriver driver TODO: create headless Chrome driver TODO: reuse
    * startBrowser where possible
    */
-  public static WebDriver GetProxyBrowser(String browserName, Configuration config, String url, BrowserMobProxy bmp) {
+  public static WebDriver GetProxyBrowser(String browserName, String url, BrowserMobProxy bmp) {
 
     WebDriver driver = null;
 
@@ -129,7 +130,9 @@ public class BrowserManager {
 
     // Get the Selenium proxy object and configure it as a desired capability
     Proxy seleniumProxy = ClientUtil.createSeleniumProxy(bmp);
-    DesiredCapabilities capabilities = new DesiredCapabilities();
+    chromeOptions.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+    chromeOptions.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
+
 
     // Turn off Selenium logging for all browsers.
     // This should really be in a config file, but for now...
@@ -148,14 +151,12 @@ public class BrowserManager {
       chromeOptions.setCapability(CapabilityType.PROXY, seleniumProxy);
       driver = new ChromeDriver(chromeOptions);
       driver.manage().window().maximize();
-      driver.get(url); // open proxy page
     } else if (browserName.equalsIgnoreCase("Firefox")) {
       WebDriverManager.firefoxdriver().setup();
 
       firefoxOptions.setCapability(CapabilityType.PROXY, seleniumProxy);
       driver = new FirefoxDriver(firefoxOptions);
       driver.manage().window().maximize();
-      driver.get(url);
     } else if (browserName.toLowerCase().contains("headless")) {
       // Firefox/Geckdo driver are the same
       WebDriverManager.firefoxdriver().setup();
@@ -166,7 +167,6 @@ public class BrowserManager {
       firefoxOptions.setCapability(CapabilityType.PROXY, seleniumProxy);
       driver = new FirefoxDriver(firefoxOptions);
       driver.manage().window().maximize();
-      driver.get(url);
     } else if (browserName.equalsIgnoreCase("ChromeHeadless")) {
       WebDriverManager.chromedriver().setup();
       System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
@@ -178,7 +178,6 @@ public class BrowserManager {
       chromeOptions.setCapability(CapabilityType.PROXY, seleniumProxy);
       driver = new ChromeDriver(chromeOptions);
       driver.manage().window().maximize();
-      driver.get(url);
     } else {
       throw new IllegalArgumentException("Invalid browser type; check configuration settings.");
     }

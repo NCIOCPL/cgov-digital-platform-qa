@@ -3,6 +3,9 @@ package gov.cancer.pageobject;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 
+import net.lightbody.bmp.BrowserMobProxy;
+import net.lightbody.bmp.core.har.Har;
+import net.lightbody.bmp.proxy.CaptureType;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -27,6 +30,7 @@ import gov.cancer.framework.IResize;
 public abstract class PageObjectBase {
 
   WebDriver browser;
+  BrowserMobProxy proxy;
   Configuration config = new Configuration();
   WebDriverWait wait;
 
@@ -67,25 +71,49 @@ public abstract class PageObjectBase {
   }
 
   /**
+   * Overloaded Constructor for testing analytics - is necessary due to capturing of analytics requires use of Proxy browser
+   * Note: Proxy object is passed from the TestRunner
+   */
+  public PageObjectBase(String path, BrowserMobProxy proxy) {
+    String fullUrl = MakeUrl(path);
+    this.proxy = proxy;
+    //start proxy server
+    proxy.start();
+    //create an instance of the proxy browser to capture analytics
+    browser = BrowserManager.GetProxyBrowser(config.getBrowser(), fullUrl, proxy);
+    proxy.enableHarCaptureTypes(CaptureType.REQUEST_CONTENT, CaptureType.RESPONSE_CONTENT);
+
+    // create a new HAR with the label of passed url
+    proxy.newHar(path);
+
+    //wait is setting timeout same as implicit but will be used for explicit Expected Conditions wait
+    wait = new WebDriverWait(browser, config.getImplicitTimeout());
+    browser.get(fullUrl);
+    PageFactory.initElements(this.getBrowser(), this);
+  }
+
+  /**
    * Set up a version of the IDisposable pattern, but following Java conventions;
    * mainly naming it close() instead of Dispose(). For more, see
    * https://docs.microsoft.com/en-us/dotnet/api/system.idisposable?view=netframework-4.7.2
    */
   private boolean closed = false;
 
-  public final void close(){
+  public final void close() {
     close(true);
   }
 
   protected void close(boolean closing) {
-    if(!this.closed) {
-      if(closing) {
+    if (!this.closed) {
+      if (closing) {
         // Clean up of additional disposable objects would go here.
       }
-
       // Kill an instance of the driver.
       browser.quit();
-
+      //stop the proxy server
+      if (proxy.isStarted()) {
+        proxy.stop();
+      }
       this.closed = true;
     }
 
@@ -169,7 +197,7 @@ public abstract class PageObjectBase {
     // Wait for the page initialization to complete and the document.ready
     // event to fire.
     new WebDriverWait(this.browser, MAX_PAGE_LOAD_DELAY).until(
-        webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
+      webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
   }
 
   /**
@@ -194,5 +222,16 @@ public abstract class PageObjectBase {
   public WebDriverWait getWait(){
     return wait;
   }
+
+
+  /**
+   * Getter to get the Har file from http request
+   *
+   * @return
+   */
+  public Har getHar() {
+    return proxy.getHar();
+  }
+
 
 }

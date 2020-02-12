@@ -4,6 +4,7 @@ import gov.cancer.framework.ElementHelper;
 import gov.cancer.pageobject.components.*;
 import gov.cancer.pageobject.cts.advanced_search_page_components.AgeSection;
 import gov.cancer.pageobject.cts.components.ErrorDisplay;
+import net.lightbody.bmp.BrowserMobProxy;
 import org.openqa.selenium.WebElement;
 
 
@@ -67,6 +68,16 @@ public class BasicSearchPage extends CTSPage {
     age_field = ElementHelper.findElement(getBrowser(), AGE_FIELD);
     zip_field = ElementHelper.findElement(getBrowser(), ZIP_FIELD);
       }
+
+  /**
+   * Constructor for analytics testing
+   * @param path
+   * @param proxy
+   */
+  public BasicSearchPage(String path, BrowserMobProxy proxy) {
+    super(path, proxy);
+
+  }
 
   /**
    * Getter method for AutoSuggestField CancerType

@@ -6,6 +6,7 @@ import gov.cancer.pageobject.PageObjectBase;
 import gov.cancer.pageobject.components.Button;
 import gov.cancer.pageobject.components.Delighter;
 import gov.cancer.pageobject.components.TextField;
+import net.lightbody.bmp.BrowserMobProxy;
 import org.apache.http.NameValuePair;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -55,6 +56,10 @@ public class CTSPage extends PageObjectBase {
     header = ElementHelper.findElement(rootElement, HEADER);
   }
 
+  public CTSPage(String path, BrowserMobProxy proxy) {
+    super(path, proxy);
+
+  }
 
   /**
    * Check if header element is displayed

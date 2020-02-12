@@ -2,6 +2,8 @@ package gov.cancer.tests;
 
 import java.lang.reflect.InvocationTargetException;
 
+import net.lightbody.bmp.BrowserMobProxy;
+import net.lightbody.bmp.BrowserMobProxyServer;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 
@@ -194,10 +196,73 @@ public class TestRunner<T extends PageObjectBase> {
        * this, these specific exceptions may be safely swallowed.
        */
     } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-        | NoSuchMethodException | SecurityException e) {
+      | NoSuchMethodException | SecurityException e) {
       e.printStackTrace();
     }
 
   }
 
+  //************TestRunners method for testing analytics**************//
+
+  /**
+   * this method is running test in the proxy browser - default implementation for the maximized breakpoint
+   *
+   * @param classImplementation
+   * @param path
+   * @param callback
+   * @param <T>
+   */
+
+  public static <T extends PageObjectBase> void runProxy(Class<T> classImplementation, String path,
+      ITestAction<T> callback) {
+
+    runProxyImplementation(classImplementation, (WebDriver browser) -> {
+      browser.manage().window().maximize();
+    }, path, callback);
+  }
+
+  /**
+   * Method to instantiate a Page Object class by calling it's overloaded constructor - to use with proxy browser
+   * That allows us to customize tests and run them in bulk - TestRunner will define which PageObject to instantiate -> which
+   * browser is running (proxy or regular)
+   * @param classImplementation
+   * @param resizer
+   * @param path
+   * @param callback
+   * @param <T>
+   */
+  private static <T extends PageObjectBase> void runProxyImplementation(Class<T> classImplementation, IResize<T> resizer,
+      String path,  ITestAction<T> callback) {
+
+    try {
+      /**
+       * Find the constructor of the passed class which takes a String, and then
+       * create a new instance, using the path parameter.
+       *
+       * Based on https://stackoverflow.com/a/300013/282194
+       */
+      BrowserMobProxy proxy = new BrowserMobProxyServer();
+      T page = classImplementation.getConstructor(String.class, BrowserMobProxy.class).newInstance(path, proxy);
+      page.doResize(resizer);
+
+      try {
+        // Invoke the callback.
+        callback.test(page);
+      } finally {
+        // Regardless of what happens in the test, close the page object.
+        page.close();
+      }
+
+      /**
+       * Technically, the calls to getConstructor() and newInstance() are capable of
+       * throwing various exceptions. In reality, because T is constrained to be a
+       * subclass of PageObjectBase, we know that the constructor exists. Because of
+       * this, these specific exceptions may be safely swallowed.
+       */
+    } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+      | NoSuchMethodException | SecurityException e) {
+      e.printStackTrace();
+    }
+
+  }
 }
