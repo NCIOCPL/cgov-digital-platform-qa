@@ -4,6 +4,7 @@ import gov.cancer.framework.ExcelDataReader;
 import gov.cancer.pageobject.crosscutting.MegaMenuPage;
 import gov.cancer.tests.TestObjectBase;
 import gov.cancer.tests.TestRunner;
+import org.apache.http.NameValuePair;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -59,23 +60,27 @@ public class MegaMenu_Test extends TestObjectBase {
   }
 
   /**
-   * This test is verifying that the length of the all titles in sub menu filed combined is within range
+   * This test is verifying that the length of the dropdown sub menus text is within reasonable range
    * @param path
-   * @param minTextLength lower range of acceptable text length
-   * @param maxTextLength higher range of acceptable text length
+   * @param boundaries lower and highest range of acceptable text length
+   * @param maxIndex En =6; Es = 5 (number of sub menus)
    */
-  @Test (dataProvider = "getPagePaths", dependsOnMethods = {"verifyMegaMenuVisible"})
-  public void verifyTextLength (String path, int minTextLength, int maxTextLength){
-
+  @Test (dataProvider = "getSubMenuTextRange",dependsOnMethods = {"verifyMegaMenuVisible"})
+  public void verifyTextLengthPerSubMenu (String path, List<int[]> boundaries, int maxIndex){
     TestRunner.runDesktop(MegaMenuPage.class, path, (MegaMenuPage page) -> {
-    for (int i=0; i<page.numberOfMenuTitles(); i++) {
-      page.hoverOverMenuTitle(i);
-      //verify the each subMenu field text is not exceeding the range
-      Assert.assertTrue(page.getSubMenuFieldText(i).length()>=minTextLength && page.getSubMenuFieldText(i).length()<=maxTextLength, "SubMenu text is within range");
-    }
+      for (int i=0; i<maxIndex; i++) {
+        //hover over the sub menu on the position 'i' (from 0 to 4(es) or 5(en))
+        page.hoverOverMenuTitle(i);
+        //retrieve the text length
+        int textLength = page.getSubMenuFieldText(i).length();
+        //verify that the text retrieved from submenu is within reasonable range
+        Assert.assertTrue(
+          textLength>=boundaries.get(i)[0] && textLength <=boundaries.get(i)[1]
+          ,"SubMenu at index: " + i  + " text length is not within reasonable range");
+      }
 
-  });
-}
+    });
+  }
 
   /*****************************************  Tablet mode *********************************/
 
@@ -135,7 +140,6 @@ public class MegaMenu_Test extends TestObjectBase {
       Assert.assertTrue(page.getMobileSubMenuTextLength()>=minTextLength && page.getMobileSubMenuTextLength()<=maxTextLength);
     });
   }
-
 
   /*****************************************  Mobile mode *********************************/
 
@@ -260,4 +264,33 @@ public class MegaMenu_Test extends TestObjectBase {
     }
     return converted.iterator();
   }
+
+  /**
+   * Data provider retrieves path to pages as well as boundaries of min and max text length and the maximum index of submenu per language -
+   * for EN it's 6 sub menus, ES has 5
+   * @return
+   */
+  @DataProvider(name = "getSubMenuTextRange")
+  public Iterator<Object[]> getSubMenuTextRange() {
+    String[] columns = { "path", "boundary","index" };
+    Iterator<Object[]> values = new ExcelDataReader(getDataFilePath("mega-menu-data.xlsx"),
+      "sub_menu", columns);
+    List<Object[]> converted = new ArrayList<Object[]>();
+    while (values.hasNext()) {
+      Object[] item = values.next();
+      List <int[]> ranges = new ArrayList<int[]>();
+      String rawRange = (String) item[1];
+      int maxIndex  = Integer.parseInt((String) item[2]);
+      List <String> pairs = Arrays.asList(rawRange.split(","));
+      for (String pair: pairs) {
+        String [] convertPair = pair.split(":");
+        ranges.add(new int[]{Integer.parseInt(convertPair[0]),Integer.parseInt(convertPair[1])});
+      }
+      converted.add(new Object[] { item[0], ranges, maxIndex });
+    }
+    return converted.iterator();
+  }
 }
+
+
+
