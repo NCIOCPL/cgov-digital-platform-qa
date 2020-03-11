@@ -2,6 +2,7 @@ package gov.cancer.tests.cts;
 
 import gov.cancer.framework.ExcelDataReader;
 import gov.cancer.framework.ParsedURL;
+import gov.cancer.pageobject.cts.PrintTrialNavigationResult;
 import gov.cancer.pageobject.cts.SearchNavigationResult;
 import gov.cancer.pageobject.cts.SearchResultsPage;
 import gov.cancer.pageobject.cts.components.ResultItem;
@@ -726,6 +727,58 @@ public class Search_Results_Test extends TestObjectBase {
     });
   }
 
+  /**
+   * This test is verifying that the URL path retrieved from 'Check for Updates' links
+   * is matching with corresponding initially selected trial title link
+   * on the Search Result Page
+   * This test provides reasonable testing of Print Modal functionality
+   * as it shows that all trials selected are brought to the PrintPage
+   */
+  @Test(dataProvider = "getPrintPagePaths")
+  public void verifyCheckForUpdatesLinks(String path) {
+    TestRunner.run(SearchResultsPage.class, path, (SearchResultsPage page) -> {
+      //before navigating away to a print page, collect all trial title links
+      List<String> titlesLink = new ArrayList<>();
+      for (ResultItem ri : page.getResultListSection().getAllResultsItems()){
+        titlesLink.add(ri.getTitleLink().getUrl().getPath());
+      }
+      //toggle the 'Select All' checkbox
+      page.getTopSelectAllOnPageCheckbox().toggle();
+      //Trigger a navigation event by clicking 'Print Selected' button
+      PrintTrialNavigationResult printPage = page.printSelectedTrials(page.getTopPrintSelected());
+      //Collect all rendered 'check for updates' links
+      List<Link> checkForUpdates = printPage.getCheckForUpdatesLinks();
+      //Verify that the same number of trials was rendered as it was selected initially
+      Assert.assertEquals(titlesLink.size(),checkForUpdates.size());
+      //verify each link
+      for (int i = 0; i < checkForUpdates.size(); i++) {
+      Assert.assertEquals(checkForUpdates.get(i).getUrl().getPath(),titlesLink.get(i));
+      }
+    });
+  }
+
+  /**
+   * This test is verifying all three Action Links at the top of Print page
+   * print action - contains a JavaScript statement
+   * email - contains a href with url that calls a pop-up
+   * New Search - link back to either Basic or Advanced Search pages
+   */
+  @Test(dataProvider = "getPrintPageActionLinks")
+  public void verifyActionLinks(String path, String printHref, String emailLinkPath, String newSearchLink) {
+    TestRunner.run(SearchResultsPage.class, path, (SearchResultsPage page) -> {
+      //Select bottom 'Select All' checkbox
+      page.getBottomSelectAllOnPageCheckbox().toggle();
+      // //Trigger a navigation event by clicking bottom 'Print Selected' button
+      PrintTrialNavigationResult printPage = page.printSelectedTrials(page.getBottomPrintSelected());
+      //Verify that print action link contains expected Script
+      Assert.assertEquals(printPage.getPrintActionLink(),printHref);
+      //Verify that email pop-up action link has expected path
+      Assert.assertEquals(printPage.getEmailActionLink().getUrl().getPath(),emailLinkPath);
+      // Verify that New Search link contains expected href(to Basic or Advanced Search)
+      Assert.assertEquals(printPage.getNewSearchLink().getUrl().getPath(),newSearchLink);
+    });
+  }
+
 
   /***********************************DATA PROVIDERS***********************************/
 
@@ -1032,6 +1085,29 @@ public class Search_Results_Test extends TestObjectBase {
     }
     return converted.iterator();
   }
+
+  /**
+   * Retrieves paths to Search Result page to be redirected to Print Trials page
+   * @return
+   */
+  @DataProvider(name = "getPrintPagePaths")
+  public Iterator<Object[]> getPrintPagePaths() {
+    String[] columns = {"path"};
+    return new ExcelDataReader(getDataFilePath("cts-search-results-data.xlsx"), "print_page", columns);
+  }
+
+  /**
+   * Retrieves paths to Search Result page to be redirected to Print Trials page as well as all three action
+   * links contents
+   * @return
+   */
+  @DataProvider(name = "getPrintPageActionLinks")
+  public Iterator<Object[]> getPrintPageActionLinks() {
+    String[] columns = {"path","printLink","emailLink","newSearchLink"};
+    return new ExcelDataReader(getDataFilePath("cts-search-results-data.xlsx"), "print_page", columns);
+  }
+
+
 
 }
 

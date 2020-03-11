@@ -196,10 +196,22 @@ public class SearchResultsPage extends CTSPage {
   }
 
   /**
+   * navigation event that is triggered by clicking 'Print Selected' button.
+
+   * @param button - can either be top 'Print Selected' or bottom one
+   * @return PrintTrialNavigationResult object
+   */
+  public PrintTrialNavigationResult printSelectedTrials(Button button) {
+    expectUrlChange(() -> {
+      button.click();
+    });
+    PrintTrialNavigationResult page = new PrintTrialNavigationResult(getBrowser());
+    return page;
+  }
+  /**
    * Retrieve sub header text
    */
   public String getSubHeader() {
-    //this.subHeader = ElementHelper.findElement(getBrowser(),"div.all-trials strong");
     return ElementHelper.getText(getBrowser(), "div.all-trials strong");
   }
 
@@ -227,27 +239,29 @@ public class SearchResultsPage extends CTSPage {
   /**
    * Due to 'No Results Found" page locator for 'Start Over' link differ from all other scenarios, this method
    * retrieves "Start Over' link object by using it's unique locator
+   *
    * @return link object
    */
-  public Link getNoResultsStartOver(){
+  public Link getNoResultsStartOver() {
     return new Link(ElementHelper.findElement(getBrowser(), "div.cts-results-header div> a"));
   }
 
   /**
    * Overridden version of Get Help delighter getter (from CTS_Page) due to necessity to use different locator for Search Results page only
-   *    * @return
+   * * @return
    */
   @Override
-  public Delighter getHelpDelighter (){
+  public Delighter getHelpDelighter() {
     return new Delighter(ElementHelper.findElement(getBrowser(), HELP_DELIGHTER_LOCATOR));
   }
 
   /**
    * Overridden version of Trial Checklist delighter getter(from CTSPage) due to necessity to use different locator for Search Results page only
+   *
    * @return
    */
   @Override
-  public Delighter getTrialCheckListDelighter (){
+  public Delighter getTrialCheckListDelighter() {
     return new Delighter(ElementHelper.findElement(getBrowser(), TRIAL_CHECKLIST_DELIGHTER_LOCATOR));
   }
 }
