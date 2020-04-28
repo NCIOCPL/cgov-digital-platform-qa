@@ -1,21 +1,21 @@
 package gov.cancer.pageobject.crosscutting;
 
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.openqa.selenium.WebElement;
+import gov.cancer.framework.ElementHelper;
 import gov.cancer.pageobject.PageObjectBase;
+import gov.cancer.pageobject.helper.BreadCrumb;
 
 /**
  * Pseudo page object representing any page in the system. The BreadCrumb class
  * is used solely for verifying attributes of a page's bread crumb trail.
  */
 public class BreadCrumbPage extends PageObjectBase {
-
-
-  @FindBy(how = How.CSS, using = ".breadcrumbs")
-  WebElement breadCrumb;
-
+  private List<BreadCrumb> crumbs = new ArrayList<BreadCrumb>();
+  private WebElement breadCrumb;
+  private final static String BREADCRUMB_SELECTOR = "div#cgvSlBreadcrumb";
   /**
    * Constructor
    *
@@ -23,24 +23,27 @@ public class BreadCrumbPage extends PageObjectBase {
    */
   public BreadCrumbPage(String path) {
     super(path);
+    this.breadCrumb = ElementHelper.findElement(getBrowser(), BREADCRUMB_SELECTOR);
+    List<WebElement> breadcrumbpages = ElementHelper.findElements(this.breadCrumb, ":scope .breadcrumbs>li");
+    for (WebElement link : breadcrumbpages) {
+      crumbs.add(new BreadCrumb(link));
+    }
   }
-
   /**
-   * Reports whether the bread crumb is visible.
+   * Reports whether the bread crumb is displayed.
    *
-   * @return True if the bread crumb is visible.
+   * @return False if the bread crumb is not displayed.
    */
   public boolean isBreadCrumbVisible() {
-    return breadCrumb.isDisplayed();
+    if (breadCrumb != null)
+      return breadCrumb.isDisplayed();
+    else
+      return false;
   }
-
   /**
-   * Retrieves the innerText from all breadcrumb elements, removing any
-   * leading/trailing whitespace on each node of the trail.
+   * Retrieves all the links of the Breadcrumb of the page
    */
-  public String getBreadCrumbText() {
-    String Breadcrumb = breadCrumb.getText();
-    return Breadcrumb;
+  public List<BreadCrumb> getBreadCrumbs() {
+    return crumbs;
   }
-
 }

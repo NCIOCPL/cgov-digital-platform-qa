@@ -26,4 +26,11 @@
     </classes>
   </test>
 
+	<test name="PDQCitations.">
+		<classes>
+			<class name="gov.cancer.tests.fields.PDQCitations_Test" />
+		</classes>
+	</test>
+
 </suite>
+

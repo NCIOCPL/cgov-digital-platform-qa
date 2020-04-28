@@ -48,4 +48,14 @@ public class Link {
   public void click() {
     element.click();
   }
+
+	/**
+	 * Retrieves the text of the link html element
+	 *
+	 * @return
+	 */
+	public String getText() {
+		return element.getText();
+  }
+
 }

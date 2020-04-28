@@ -2,7 +2,11 @@ package gov.cancer.pageobject.helper;
 
 import org.openqa.selenium.WebElement;
 
+/**
+ * This helper class is used for working with html field (e.g. Main Menu dropdown/expanded field with text)
+ */
 public class BlobOfText {
+
   //webElement representing html field
   private WebElement container;
 
