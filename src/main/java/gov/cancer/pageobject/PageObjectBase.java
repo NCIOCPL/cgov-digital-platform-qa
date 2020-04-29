@@ -28,6 +28,7 @@ public abstract class PageObjectBase {
 
   WebDriver browser;
   Configuration config = new Configuration();
+  WebDriverWait wait;
 
   // Allow for a 20 second delay. Because network delays can be insane.
   static final int MAX_PAGE_LOAD_DELAY = 20;
@@ -51,6 +52,8 @@ public abstract class PageObjectBase {
     String fullUrl = MakeUrl(path);
 
     browser = BrowserManager.GetBrowser();
+    //wait is setting timeout same as implicit but will be used for explicit Expected Conditions wait
+    wait = new WebDriverWait(browser, config.getImplicitTimeout());
     browser.get(fullUrl);
     PageFactory.initElements(this.getBrowser(), this);
   }
@@ -187,4 +190,9 @@ public abstract class PageObjectBase {
 
     return url;
   }
+
+  public WebDriverWait getWait(){
+    return wait;
+  }
+
 }
