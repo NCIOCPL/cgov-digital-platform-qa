@@ -71,22 +71,6 @@ public class MetaData_Test extends TestObjectBase {
     });
   }
 
-  /**
-   * Asserts current page title equals meta title
-   *
-   * @param path
-   *          Path of the page to check.
-   */
-  @Test(dataProvider = "getPagesWithAllMeta")
-  public void verifyPagesWithBrowserTitle(String path) {
-
-    TestRunner.run(PageWithMetaData.class, path, (PageWithMetaData page) -> {
-      Assert.assertEquals(page.getPageTitle(), page.getMetaTitle().getContent(),"meta tage 'title' is incorrect");
-    });
-  }
-
-
-
   /************** Data Provider *************/
   /**
    * Retrieves a list of paths to pages with meta data

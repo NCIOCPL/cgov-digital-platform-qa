@@ -23,7 +23,6 @@ public class PageWithMetaData extends PageObjectBase {
   private String dcTermsPartOf = ":scope meta[name='dcterms.isPartOf']";
   private String IsReferencedBy = ":scope meta[name='dcterms.isReferencedBy']";
   private String coverage = ":scope meta[name='dcterms.coverage']";
-  private String metaTitle = ":scope meta[name='title']";
   private String ogTitle = ":scope meta[property='og:title']";
   private String siteName = ":scope meta[property='og:site_name']";
   private String ogURL = ":scope meta[property='og:url']";
@@ -113,14 +112,6 @@ public class PageWithMetaData extends PageObjectBase {
   public MetaTag getDCTermsPartOf() {
     WebElement PartOf = ElementHelper.findElement(headField, dcTermsPartOf);
     return new MetaTag(PartOf);
-  }
-
-  /**
-   * Finds and returns title metatag
-   */
-  public MetaTag getMetaTitle() {
-    WebElement Title = ElementHelper.findElement(headField, metaTitle);
-    return new MetaTag(Title);
   }
 
   /**
