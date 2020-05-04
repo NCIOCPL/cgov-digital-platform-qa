@@ -4,7 +4,13 @@
 
   <test name="LeadImage tests." preserve-order="true">
     <classes>
-      <class name="gov.cancer.tests.image.LeadImage_Test" />
+      <class name="gov.cancer.tests.image.LeadImage_Test">
+        <methods>
+          <!-- Disabled due to problems with captions in lead images.
+                NCIOCPL/cgov-digital-platform#2533 -->
+          <exclude name="verifyImageCaption" />
+        </methods>
+      </class>
     </classes>
   </test>
 
