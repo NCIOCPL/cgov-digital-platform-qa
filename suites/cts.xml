@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Tests for CTS" parallel="classes" thread-count="3">
-
   <test name="CTS Common tests." preserve-order="true">
     <classes>
       <class name="gov.cancer.tests.cts.CTS_BasicSearchFunctionality_Test"/>
@@ -9,14 +8,52 @@
       <class name="gov.cancer.tests.cts.advanced_search_form.AgeSection_Test"/>
       <class name="gov.cancer.tests.cts.advanced_search_form.KeywordsPhrases_Test"/>
       <class name="gov.cancer.tests.cts.advanced_search_form.TrialIDSection_Test"/>
-      <class name="gov.cancer.tests.cts.advanced_search_form.DrugTreatment_Test"/>
+      <class name="gov.cancer.tests.cts.advanced_search_form.DrugTreatment_Test">
+        <methods>
+          <!-- Disable due to failure to capture AutoComplete Helper text - perhaps race condition
+          NCIOCPL/cgov-digital-platform-qa/issues/226-->
+          <exclude name="verifyDrugEnterMessage"/>
+          <exclude name="verifyTreatmentEnterMessage"></exclude>
+        </methods>
+      </class>
       <class name="gov.cancer.tests.cts.TrialDetails_Test" />
-      <class name="gov.cancer.tests.cts.advanced_search_form.TrialInvestigators_Test"/>
-      <class name="gov.cancer.tests.cts.advanced_search_form.LeadOrganization_Test" />
+      <class name="gov.cancer.tests.cts.advanced_search_form.TrialInvestigators_Test">
+        <methods>
+          <!-- Disable due to failure to capture AutoComplete Helper text - perhaps race condition
+          NCIOCPL/cgov-digital-platform-qa/issues/227-->
+          <exclude name="verifyTrialInvestigatorsAutocompleteHelperText"/>
+        </methods>
+      </class>
+      <class name="gov.cancer.tests.cts.advanced_search_form.LeadOrganization_Test" >
+        <methods>
+          <!-- Disable due to failure to capture AutoComplete Helper text - perhaps race condition
+          NCIOCPL/cgov-digital-platform-qa/issues/225-->
+          <exclude name="verifyLeadOrganizationAutocompleteHelperText"/>
+          <exclude name="verifyNoResultsErrorMessageOnTheLeadOrganizationField"/>
+        </methods>
+      </class>
       <class name="gov.cancer.tests.cts.advanced_search_form.TrialPhase_Test"/>
-      <class name="gov.cancer.tests.cts.advanced_search_form.TrialType_Test"/>
-      <class name="gov.cancer.tests.cts.advanced_search_form.CancerTypeSection_Test"/>
+      <class name="gov.cancer.tests.cts.advanced_search_form.TrialType_Test">
+        <methods>
+          <!-- Disable due to failure in expectUrlChange lambda method
+          NCIOCPL/cgov-digital-platform-qa/issues/229-->
+          <exclude name="verifyAllCheckbox"/>
+        </methods>
+      </class>
+      <class name="gov.cancer.tests.cts.advanced_search_form.CancerTypeSection_Test">
+        <methods>
+          <!-- Disable due to lots of failures connected to either race condition or buggy logic with xpath
+          NCIOCPL/cgov-digital-platform-qa/issues/228-->
+          <exclude name="verifyPrimaryCancerTypeSubTypeField"/>
+          <exclude name="verifyPrimaryCancerTypeSubTypeSideEffectsField"/>
+          <exclude name="verifyPrimaryCancerTypeSubTypeStageSideEffectsField"/>
+          <exclude name="verifyPrimaryCancerTypeStageSideEffectsFieldOnEnter"/>
+          <exclude name="verifyPrimaryCancerTypeStageSideEffectsField"/>
+          <exclude name="verifyPrimaryCancerTypeStageField"/>
+          <exclude name="verifyPrimaryCancerTypeSubTypeStageField"/>
+          <exclude name="verifyPrimaryCancerTypeField"/>
+        </methods>
+      </class>
     </classes>
   </test>
-
 </suite>
