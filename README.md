@@ -1,3 +1,8 @@
+> [!WARNING]
+> This repository has been archived and is no longer maintained.  
+> The code is provided for historical reference and may contain unpatched or unknown vulnerabilities.  
+> It should not be used in production systems.  
+
 # CancerGov Digital Platform QA Framework
 
 This is the QA automation framework for the [CancerGov Digital Communications Platform](https://github.com/nciocpl/cgov-digital-platform/)
